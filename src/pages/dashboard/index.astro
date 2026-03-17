@@ -1,0 +1,163 @@
+---
+import Dashboard from '../../layouts/Dashboard.astro';
+---
+
+<Dashboard title="Dashboard" activeTab="overview">
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-[22px] font-semibold tracking-[-0.03em] text-white/90" data-i18n="dash.title">Dashboard</h1>
+      <p class="text-[13px] text-white/30 mt-1" data-i18n="dash.subtitle">Overview of your API activity and performance</p>
+    </div>
+    <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[11px] text-white/25">
+      <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+      <span data-i18n="nav.synced">Synced</span>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+    <div class="db-stat-card">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-[11px] font-medium text-white/30 uppercase tracking-[0.05em]" data-i18n="dash.totalCalls">Total Calls</span>
+        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+      </div>
+      <div class="text-[28px] font-bold tracking-[-0.03em] text-white" id="stat-total">0</div>
+      <div class="text-[11px] text-white/20 mt-1" data-i18n="dash.allTime">all time</div>
+    </div>
+    <div class="db-stat-card">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-[11px] font-medium text-white/30 uppercase tracking-[0.05em]" data-i18n="dash.avgResponse">Avg Response</span>
+        <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      </div>
+      <div class="flex items-baseline gap-1"><span class="text-[28px] font-bold tracking-[-0.03em] text-white" id="stat-avg">0</span><span class="text-[13px] text-white/25">ms</span></div>
+      <div class="text-[11px] text-white/20 mt-1" data-i18n="dash.average">average</div>
+    </div>
+    <div class="db-stat-card">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-[11px] font-medium text-white/30 uppercase tracking-[0.05em]" data-i18n="dash.successRate">Success Rate</span>
+        <div class="w-8 h-8 rounded-lg bg-violet-500/10 flex items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      </div>
+      <div class="flex items-baseline gap-1"><span class="text-[28px] font-bold tracking-[-0.03em] text-white" id="stat-success">0</span><span class="text-[13px] text-white/25">%</span></div>
+      <div class="mt-2 h-1 rounded-full bg-white/[0.06] overflow-hidden"><div class="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-700" id="success-bar" style="width: 0%"></div></div>
+    </div>
+    <div class="db-stat-card">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-[11px] font-medium text-white/30 uppercase tracking-[0.05em]" data-i18n="dash.today">Today</span>
+        <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      </div>
+      <div class="text-[28px] font-bold tracking-[-0.03em] text-white" id="stat-today">0</div>
+      <div class="text-[11px] text-white/20 mt-1" data-i18n="dash.requestsToday">requests today</div>
+    </div>
+  </div>
+
+  <!-- Quick Actions + Monitor + Activity -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+    <div class="db-card">
+      <div class="db-card-header" data-i18n="dash.quickActions">Quick Actions</div>
+      <div class="space-y-1" id="quick-actions">
+        <a href="/dashboard/apis" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/[0.04] transition-colors group">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center text-[14px] shrink-0" style="background:#10B98112;color:#10B981;">↗</div>
+          <div class="min-w-0"><div class="text-[13px] font-medium text-white/80 group-hover:text-white transition-colors" data-i18n="dash.quickSend">Quick Send</div><div class="text-[11px] text-white/25" data-i18n="dash.sendRequest">Send a request</div></div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ml-auto text-white/10 group-hover:text-white/30 transition-colors shrink-0"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+        <a href="/dashboard/apis" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/[0.04] transition-colors group">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center text-[14px] shrink-0" style="background:#3B82F612;color:#3B82F6;">+</div>
+          <div class="min-w-0"><div class="text-[13px] font-medium text-white/80 group-hover:text-white transition-colors" data-i18n="dash.newCollection">New Collection</div><div class="text-[11px] text-white/25" data-i18n="dash.organizeApis">Organize APIs</div></div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ml-auto text-white/10 group-hover:text-white/30 transition-colors shrink-0"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+        <a href="/dashboard/environments" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/[0.04] transition-colors group">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center text-[14px] shrink-0" style="background:#F59E0B12;color:#F59E0B;">⇄</div>
+          <div class="min-w-0"><div class="text-[13px] font-medium text-white/80 group-hover:text-white transition-colors" data-i18n="dash.environments">Environments</div><div class="text-[11px] text-white/25" data-i18n="dash.manageVars">Manage variables</div></div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ml-auto text-white/10 group-hover:text-white/30 transition-colors shrink-0"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+        <a href="/dashboard/history" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/[0.04] transition-colors group">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center text-[14px] shrink-0" style="background:#8B5CF612;color:#8B5CF6;">↺</div>
+          <div class="min-w-0"><div class="text-[13px] font-medium text-white/80 group-hover:text-white transition-colors" data-i18n="dash.viewHistory">View History</div><div class="text-[11px] text-white/25" data-i18n="dash.pastRequests">Past requests</div></div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ml-auto text-white/10 group-hover:text-white/30 transition-colors shrink-0"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="lg:col-span-2 space-y-4">
+      <div class="db-card">
+        <div class="flex items-center justify-between mb-5">
+          <span class="db-card-header !mb-0" data-i18n="dash.systemStatus">System Status</span>
+          <a href="/dashboard/monitor" class="text-[11px] text-white/25 hover:text-white/50 transition-colors" data-i18n="dash.viewAll">View all →</a>
+        </div>
+        <div class="grid grid-cols-4 gap-4">
+          <div class="text-center"><div class="flex items-center justify-center gap-1.5 mb-2"><div class="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></div><span class="text-[10px] text-white/25 uppercase tracking-wider font-medium" data-i18n="dash.up">Up</span></div><div class="text-[20px] font-bold text-white" id="mon-up">0</div></div>
+          <div class="text-center"><div class="flex items-center justify-center gap-1.5 mb-2"><div class="w-2 h-2 rounded-full bg-red-500"></div><span class="text-[10px] text-white/25 uppercase tracking-wider font-medium" data-i18n="dash.down">Down</span></div><div class="text-[20px] font-bold text-white" id="mon-down">0</div></div>
+          <div class="text-center"><div class="flex items-center justify-center gap-1.5 mb-2"><div class="w-2 h-2 rounded-full bg-blue-500"></div><span class="text-[10px] text-white/25 uppercase tracking-wider font-medium" data-i18n="dash.collections">Collections</span></div><div class="text-[20px] font-bold text-white" id="mon-cols">0</div></div>
+          <div class="text-center"><div class="flex items-center justify-center gap-1.5 mb-2"><div class="w-2 h-2 rounded-full bg-violet-500"></div><span class="text-[10px] text-white/25 uppercase tracking-wider font-medium" data-i18n="dash.endpoints">Endpoints</span></div><div class="text-[20px] font-bold text-white" id="mon-eps">0</div></div>
+        </div>
+      </div>
+
+      <div class="db-card">
+        <div class="flex items-center justify-between mb-4">
+          <span class="db-card-header !mb-0" data-i18n="dash.recentActivity">Recent Activity</span>
+          <a href="/dashboard/history" class="text-[11px] text-white/25 hover:text-white/50 transition-colors" data-i18n="dash.viewAll">View all →</a>
+        </div>
+        <div id="recent-activity">
+          <div id="empty-activity" class="flex flex-col items-center justify-center py-10 text-center">
+            <div class="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-4"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-white/15"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+            <p class="text-[13px] text-white/40 font-medium" data-i18n="dash.noCallsYet">No API calls yet</p>
+            <p class="text-[11px] text-white/20 mt-1 max-w-[240px]" data-i18n="dash.sendFirst">Send your first request to see activity here</p>
+            <a href="/dashboard/apis" class="mt-4 px-4 py-2 bg-white text-[#09090B] text-[12px] font-semibold rounded-lg hover:bg-white/90 transition-colors" data-i18n="dash.quickSend">Quick Send</a>
+          </div>
+          <div id="activity-list" class="hidden"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Dashboard>
+
+<style>
+  .db-stat-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; padding: 18px 20px; position: relative; overflow: hidden; }
+  .db-stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); }
+</style>
+
+<script>
+  import * as store from '../../lib/syncStore';
+  import { t } from '../../lib/i18n';
+
+  const MC: Record<string, string> = { GET:'#10B981', POST:'#3B82F6', PUT:'#F59E0B', PATCH:'#8B5CF6', DELETE:'#EF4444', HEAD:'#6B7280', OPTIONS:'#EC4899' };
+
+  function render() {
+    const el = (id: string) => document.getElementById(id);
+    el('stat-total')!.textContent = store.getTotalCalls().toLocaleString();
+    el('stat-avg')!.textContent = String(store.getAvgResponseTime());
+    el('stat-success')!.textContent = String(store.getSuccessRate());
+    el('stat-today')!.textContent = String(store.getCallsToday());
+    (el('success-bar') as HTMLElement).style.width = `${store.getSuccessRate()}%`;
+    el('mon-up')!.textContent = String(store.getUpCount());
+    el('mon-down')!.textContent = String(store.getDownCount());
+    el('mon-cols')!.textContent = String(store.getCollections().length);
+    el('mon-eps')!.textContent = String(store.getEndpoints().length);
+
+    const logs = store.getCallLogs().slice(0, 6);
+    const emptyEl = el('empty-activity')!;
+    const listEl = el('activity-list')!;
+    if (logs.length === 0) { emptyEl.classList.remove('hidden'); listEl.classList.add('hidden'); return; }
+    emptyEl.classList.add('hidden'); listEl.classList.remove('hidden'); listEl.textContent = '';
+    logs.forEach((log, i) => {
+      const c = MC[log.method] || '#6B7280';
+      const row = document.createElement('div'); row.className = `flex items-center gap-3 px-1 py-3 ${i < logs.length - 1 ? 'border-b border-white/[0.04]' : ''}`;
+      const badge = document.createElement('span'); badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded min-w-[40px] text-center shrink-0'; badge.style.background = c + '15'; badge.style.color = c; badge.textContent = log.method;
+      const info = document.createElement('div'); info.className = 'flex-1 min-w-0';
+      const name = document.createElement('div'); name.className = 'text-[13px] font-medium text-white/80 truncate'; name.textContent = log.endpointName || log.url;
+      const meta = document.createElement('div'); meta.className = 'text-[11px] text-white/25 mt-0.5'; meta.textContent = `${log.statusCode} · ${log.responseTime}ms · ${fmtAgo(log.timestamp)}`;
+      info.appendChild(name); info.appendChild(meta);
+      const dot = document.createElement('div'); dot.className = 'w-1.5 h-1.5 rounded-full shrink-0'; dot.style.background = log.success ? '#10B981' : '#EF4444';
+      row.appendChild(badge); row.appendChild(info); row.appendChild(dot); listEl.appendChild(row);
+    });
+  }
+  function fmtAgo(ts: number): string {
+    const d = Date.now() - ts;
+    if (d < 60000) return t('dash.justNow');
+    if (d < 3600000) return `${Math.floor(d / 60000)}m`;
+    if (d < 86400000) return `${Math.floor(d / 3600000)}h`;
+    return new Date(ts).toLocaleDateString();
+  }
+  store.loadLocal(); render();
+  window.addEventListener('fetchlab:synced', render);
+</script>

@@ -1,0 +1,179 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title,
+  description = 'Professional API testing for iOS. 78+ tools, pre/post scripts, GraphQL, cloud sync — all from your iPhone.',
+  canonical
+} = Astro.props;
+
+const siteUrl = 'https://fetchlab.dev';
+const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0A0A0B" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}/og-image.png`} />
+    <meta property="og:site_name" content="Fetchlab" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}/og-image.png`} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
+
+    <title>{title}</title>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Fetchlab",
+      "operatingSystem": "iOS",
+      "applicationCategory": "DeveloperApplication",
+      "description": description,
+      "url": siteUrl,
+      "offers": [
+        {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "name": "Free"
+        },
+        {
+          "@type": "Offer",
+          "price": "9.99",
+          "priceCurrency": "USD",
+          "name": "Pro",
+          "billingDuration": "P1M"
+        },
+        {
+          "@type": "Offer",
+          "price": "19.99",
+          "priceCurrency": "USD",
+          "name": "Team",
+          "billingDuration": "P1M"
+        }
+      ]
+    })} />
+  </head>
+  <body class="min-h-screen bg-[#0A0A0B] text-[#F5F5F5] relative">
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Intersection Observer for scroll animations
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      document.querySelectorAll('.observe, .observe-scale, .observe-fade, .stagger-children').forEach((el) => {
+        observer.observe(el);
+      });
+
+      // Nav scroll effect
+      const nav = document.getElementById('main-nav');
+      let lastScroll = 0;
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        if (nav) {
+          if (scrollY > 50) {
+            nav.classList.remove('nav-transparent');
+            nav.classList.add('nav-glass');
+          } else {
+            nav.classList.remove('nav-glass');
+            nav.classList.add('nav-transparent');
+          }
+        }
+        lastScroll = scrollY;
+      }, { passive: true });
+
+      // FAQ accordion
+      document.querySelectorAll('.faq-trigger').forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+          const item = trigger.closest('.faq-item');
+          if (!item) return;
+          const isActive = item.classList.contains('active');
+          // Close all
+          document.querySelectorAll('.faq-item').forEach((i) => i.classList.remove('active'));
+          // Toggle current
+          if (!isActive) item.classList.add('active');
+        });
+      });
+
+      // Showcase tabs
+      document.querySelectorAll('.showcase-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const target = tab.dataset.tab;
+          document.querySelectorAll('.showcase-tab').forEach((t) => {
+            t.classList.remove('active', 'bg-[#1E1E21]', 'text-[#F5F5F5]');
+            t.classList.add('text-[#5C5C5C]');
+          });
+          tab.classList.add('active', 'bg-[#1E1E21]', 'text-[#F5F5F5]');
+          tab.classList.remove('text-[#5C5C5C]');
+          document.querySelectorAll('.showcase-panel').forEach((p) => {
+            p.classList.toggle('hidden', p.dataset.panel !== target);
+          });
+        });
+      });
+      // Magnetic hover effect for .magnetic elements
+      document.querySelectorAll('.magnetic').forEach((el) => {
+        el.addEventListener('mousemove', (e) => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          el.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+        });
+        el.addEventListener('mouseleave', () => {
+          el.style.transform = 'translate(0, 0)';
+        });
+      });
+
+      // Smooth parallax for hero background elements
+      const heroGlows = document.querySelectorAll('[data-parallax]');
+      if (heroGlows.length) {
+        window.addEventListener('scroll', () => {
+          const scrollY = window.scrollY;
+          heroGlows.forEach((el) => {
+            const speed = parseFloat(el.dataset.parallax) || 0.3;
+            el.style.transform = `translateY(${scrollY * speed}px)`;
+          });
+        }, { passive: true });
+      }
+    </script>
+  </body>
+</html>

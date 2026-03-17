@@ -1,0 +1,25 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="Plugins" description="Extend Fetchlab with community and custom plugins" color="#6366F1">
+  <div class="db-card">
+    <div class="db-card-header">Available Plugins</div>
+    <div class="space-y-2">
+      <div class="flex items-center gap-3 p-4 rounded-lg bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.04] transition-colors">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-[14px]">&#128272;</div>
+        <div class="flex-1"><div class="text-[13px] font-medium text-white/80">AWS Signature V4</div><div class="text-[11px] text-white/25">Auto-sign AWS API requests</div></div>
+        <button class="text-[11px] text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg font-medium cursor-pointer border-none hover:bg-indigo-500/20 transition-colors">Install</button>
+      </div>
+      <div class="flex items-center gap-3 p-4 rounded-lg bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.04] transition-colors">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-[14px]">&#128200;</div>
+        <div class="flex-1"><div class="text-[13px] font-medium text-white/80">Response Formatter</div><div class="text-[11px] text-white/25">Auto-format XML, YAML, CSV</div></div>
+        <button class="text-[11px] text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg font-medium cursor-pointer border-none hover:bg-indigo-500/20 transition-colors">Install</button>
+      </div>
+      <div class="flex items-center gap-3 p-4 rounded-lg bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.04] transition-colors">
+        <div class="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center text-[14px]">&#129514;</div>
+        <div class="flex-1"><div class="text-[13px] font-medium text-white/80">Chaos Testing</div><div class="text-[11px] text-white/25">Inject delays, errors, and failures</div></div>
+        <button class="text-[11px] text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg font-medium cursor-pointer border-none hover:bg-indigo-500/20 transition-colors">Install</button>
+      </div>
+    </div>
+  </div>
+</ToolPage>

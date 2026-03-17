@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+
+const sections = [
+  {
+    title: 'Getting Started',
+    items: [
+      { label: 'Installation & Setup', desc: 'Download Fetchlab and configure your first workspace.' },
+      { label: 'Your First Request', desc: 'Send a GET request and inspect the response.' },
+      { label: 'Collections & Environments', desc: 'Organize requests into collections with environment variables.' },
+    ],
+  },
+  {
+    title: 'Core Features',
+    items: [
+      { label: 'Request Builder', desc: 'Methods, headers, body, auth, query params, and more.' },
+      { label: 'Response Viewer', desc: 'Syntax highlighting, search, format, and copy.' },
+      { label: 'Pre & Post Scripts', desc: 'Automate workflows with Postman-compatible scripts.' },
+      { label: 'GraphQL Explorer', desc: 'Introspection, schema browser, and query builder.' },
+    ],
+  },
+  {
+    title: 'Advanced',
+    items: [
+      { label: 'Cloud Sync & Encryption', desc: 'How E2E encrypted sync works under the hood.' },
+      { label: 'Import & Export', desc: 'Postman, cURL, OpenAPI/Swagger, and HAR files.' },
+      { label: 'Developer Tools', desc: 'Encoding, hashing, generation, and security tools.' },
+      { label: 'Response Diffing', desc: 'Compare responses across versions to catch breaking changes.' },
+    ],
+  },
+];
+---
+
+<Base title="Documentation — Fetchlab" description="Learn how to use Fetchlab. Guides, API references, and tutorials for getting the most out of Fetchlab.">
+  <div class="pt-28 pb-20 px-6">
+    <div class="max-w-[780px] mx-auto">
+      <h1 class="text-[32px] sm:text-[40px] font-medium tracking-[-0.04em] text-[#F5F5F5] mb-3">Documentation</h1>
+      <p class="text-[15px] text-[#5C5C5C] mb-14 max-w-[520px]">
+        Everything you need to get started with Fetchlab and make the most of its features.
+      </p>
+
+      <div class="space-y-10">
+        {sections.map((section) => (
+          <div>
+            <h2 class="text-[15px] font-medium text-[#F5F5F5] mb-4 pb-3 border-b border-[#1E1E21]">{section.title}</h2>
+            <div class="space-y-0">
+              {section.items.map((item) => (
+                <a href="#" class="flex items-center justify-between py-4 border-b border-[#1E1E21]/50 group hover:bg-[#111113] -mx-4 px-4 rounded-lg transition-colors">
+                  <div>
+                    <div class="text-[14px] font-medium text-[#F5F5F5] mb-0.5 group-hover:text-white transition-colors">{item.label}</div>
+                    <div class="text-[12px] text-[#5C5C5C]">{item.desc}</div>
+                  </div>
+                  <svg class="w-4 h-4 text-[#2A2A2E] group-hover:text-[#5C5C5C] transition-colors shrink-0 ml-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

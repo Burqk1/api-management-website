@@ -1,0 +1,27 @@
+---
+import Dashboard from '../../layouts/Dashboard.astro';
+---
+
+<Dashboard title="Environments" activeTab="environments">
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-[22px] font-semibold tracking-[-0.03em] text-white/90" data-i18n="env.title">Environments</h1>
+      <p class="text-[13px] text-white/30 mt-1" data-i18n="env.subtitle">Manage variables across different stages</p>
+    </div>
+    <button class="px-4 py-2 bg-white text-[#09090B] text-[13px] font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2 border-none cursor-pointer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <span data-i18n="env.new">New Environment</span>
+    </button>
+  </div>
+
+  <div class="db-card">
+    <div class="flex flex-col items-center justify-center py-14 text-center">
+      <div class="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-white/15"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+      </div>
+      <p class="text-[15px] font-semibold text-white/70 mb-1" data-i18n="env.empty">No environments</p>
+      <p class="text-[13px] text-white/25 max-w-[340px] mb-5" data-i18n="env.emptyDesc">Create environments to manage variables like API URLs, tokens, and keys across production, staging, and development.</p>
+      <button class="px-4 py-2 bg-white text-[#09090B] text-[12px] font-semibold rounded-lg hover:opacity-90 transition-opacity border-none cursor-pointer" data-i18n="env.create">Create Environment</button>
+    </div>
+  </div>
+</Dashboard>

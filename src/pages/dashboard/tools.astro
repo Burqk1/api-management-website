@@ -1,0 +1,132 @@
+---
+import Dashboard from '../../layouts/Dashboard.astro';
+
+const sections = [
+  {
+    title: 'Request Tools',
+    items: [
+      { name: 'WebSocket Testing', color: '#EC4899', pro: true, href: '/dashboard/tools/websocket' },
+      { name: 'SSE Testing', color: '#EAB308', pro: true, href: '/dashboard/tools/sse' },
+      { name: 'Mock Server', color: '#F59E0B', pro: true, href: '/dashboard/tools/mockserver' },
+      { name: 'Request Chaining', color: '#8B5CF6', pro: true, href: '/dashboard/tools/chaining' },
+      { name: 'Benchmark', color: '#EF4444', pro: true, href: '/dashboard/tools/benchmark' },
+      { name: 'GraphQL Explorer', color: '#D946EF', pro: true, href: '/dashboard/tools/graphql' },
+      { name: 'gRPC Client', color: '#06B6D4', pro: true, href: '/dashboard/tools/grpc' },
+      { name: 'Load Testing', color: '#F97316', pro: true, href: '/dashboard/tools/loadtest' },
+      { name: 'Templates', color: '#22D3EE', pro: false, href: '/dashboard/apis' },
+      { name: 'Quick Send', color: '#10B981', pro: false, href: '/dashboard/apis' },
+    ],
+  },
+  {
+    title: 'Analysis',
+    items: [
+      { name: 'Analytics', color: '#8B5CF6', pro: false, href: '/dashboard/monitor' },
+      { name: 'Compare Requests', color: '#22D3EE', pro: false, href: '/dashboard/history' },
+      { name: 'AI Analysis', color: '#F59E0B', pro: true, href: '/dashboard/tools/ai-analysis' },
+      { name: 'API Docs Generator', color: '#10B981', pro: true, href: '/dashboard/tools/apidocs' },
+      { name: 'JSON Path Evaluator', color: '#F59E0B', pro: true, href: '/dashboard/tools/jsonpath' },
+      { name: 'Code Generator', color: '#06B6D4', pro: true, href: '/dashboard/tools/codegen' },
+      { name: 'AI Type Generator', color: '#3B82F6', pro: true, href: '/dashboard/tools/typegen' },
+      { name: 'Response Diff', color: '#F97316', pro: true, href: '/dashboard/tools/diff' },
+      { name: 'Contract Testing', color: '#22C55E', pro: true, href: '/dashboard/tools/contract' },
+    ],
+  },
+  {
+    title: 'Configuration',
+    items: [
+      { name: 'Environments', color: '#F59E0B', pro: false, href: '/dashboard/environments' },
+      { name: 'Cookie Manager', color: '#F59E0B', pro: false, href: '/dashboard/settings' },
+      { name: 'Import Data', color: '#3B82F6', pro: false, href: '/dashboard/apis' },
+      { name: 'Proxy Settings', color: '#8B5CF6', pro: true, href: '/dashboard/tools/proxy' },
+      { name: 'SSL Certificates', color: '#3B82F6', pro: true, href: '/dashboard/tools/ssl' },
+      { name: 'Dynamic Variables', color: '#D946EF', pro: true, href: '/dashboard/tools/dynvars' },
+      { name: 'Workspaces', color: '#F59E0B', pro: true, href: '/dashboard/tools/workspaces' },
+      { name: 'Plugins', color: '#6366F1', pro: true, href: '/dashboard/tools/plugins' },
+    ],
+  },
+  {
+    title: 'Testing',
+    items: [
+      { name: 'Pre/Post Scripts', color: '#8B5CF6', pro: true, href: '/dashboard/tools/scripts' },
+      { name: 'Assertion Builder', color: '#10B981', pro: true, href: '/dashboard/tools/assertions' },
+      { name: 'Data-Driven Testing', color: '#06B6D4', pro: true, href: '/dashboard/tools/datadriven' },
+      { name: 'Scheduled Runs', color: '#6B7280', pro: true, href: '/dashboard/tools/scheduled' },
+    ],
+  },
+  {
+    title: 'Network & Sync',
+    items: [
+      { name: 'Offline Queue', color: '#10B981', pro: false, href: '/dashboard/history' },
+      { name: 'Network Status', color: '#3B82F6', pro: false, href: '/dashboard/monitor' },
+      { name: 'Team Sync', color: '#3B82F6', pro: true, href: '/dashboard/tools/teamsync' },
+      { name: 'Git Sync', color: '#EF4444', pro: true, href: '/dashboard/tools/gitsync' },
+    ],
+  },
+];
+---
+
+<Dashboard title="Tools" activeTab="tools">
+  <div class="mb-8">
+    <h1 class="text-[22px] font-semibold tracking-[-0.03em] text-white/90" data-i18n="tools.title">Tools</h1>
+    <p class="text-[13px] text-white/30 mt-1" data-i18n="tools.subtitle">78+ professional developer tools</p>
+  </div>
+
+  <!-- Network status -->
+  <div class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/10 mb-6">
+    <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></div>
+    <span class="text-[12px] text-emerald-400 font-medium" data-i18n="tools.online">Online</span>
+  </div>
+
+  {sections.map((section) => (
+    <div class="mb-8">
+      <h2 class="text-[11px] font-semibold text-white/25 uppercase tracking-[0.08em] mb-3 px-1">{section.title}</h2>
+      <div class="db-card !p-0 overflow-hidden">
+        {section.items.map((item, i) => (
+          <a href={item.href} data-pro={item.pro ? 'true' : 'false'} class={`tool-link flex items-center gap-3 px-5 py-3.5 transition-colors hover:bg-white/[0.02] ${i < section.items.length - 1 ? 'border-b border-white/[0.04]' : ''} ${item.pro ? 'opacity-50 hover:opacity-70' : ''}`}>
+            <div class="w-2 h-2 rounded-full shrink-0" style={`background: ${item.color};`}></div>
+            <span class="flex-1 text-[13px] text-white/80 font-medium">{item.name}</span>
+            {item.pro && (
+              <span class="text-[9px] font-bold bg-orange-500/10 text-orange-400 px-2 py-0.5 rounded-full tracking-wider">PRO</span>
+            )}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/10 shrink-0"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        ))}
+      </div>
+    </div>
+  ))}
+</Dashboard>
+
+<script>
+  import { supabase } from '../../lib/supabase';
+
+  // Check user plan — if free, redirect PRO tool clicks to upgrade page
+  async function checkPlan() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
+
+    const { data } = await supabase
+      .from('profiles')
+      .select('plan')
+      .eq('id', session.user.id)
+      .single();
+
+    const isPro = data && (data.plan === 'pro' || data.plan === 'team');
+
+    if (!isPro) {
+      // Free user — intercept PRO tool clicks
+      document.querySelectorAll('.tool-link[data-pro="true"]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = '/dashboard/tools/pro-required';
+        });
+      });
+    } else {
+      // Pro user — make all tools fully opaque
+      document.querySelectorAll('.tool-link[data-pro="true"]').forEach((link) => {
+        (link as HTMLElement).style.opacity = '1';
+      });
+    }
+  }
+
+  checkPlan();
+</script>

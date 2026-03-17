@@ -1,0 +1,23 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="Pre/Post Scripts" description="Write JavaScript scripts that run before and after API requests" color="#8B5CF6">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="db-card">
+      <div class="flex items-center gap-2 mb-3"><span class="text-[10px] font-bold bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded">PRE-REQUEST</span></div>
+      <textarea rows="14" class="w-full p-3 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/50 resize-none leading-[1.7] outline-none" placeholder="// Pre-request script
+const token = pm.environment.get('auth_token');
+pm.request.headers.add({
+  key: 'Authorization',
+  value: `Bearer ${token}`
+});"></textarea>
+    </div>
+    <div class="db-card">
+      <div class="flex items-center gap-2 mb-3"><span class="text-[10px] font-bold bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">POST-REQUEST</span></div>
+      <textarea rows="14" class="w-full p-3 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/50 resize-none leading-[1.7] outline-none" placeholder="// Post-request test
+pm.test('Status is 200', () => {
+  pm.response.to.have.status(200);
+});"></textarea>
+    </div>
+  </div>
+</ToolPage>

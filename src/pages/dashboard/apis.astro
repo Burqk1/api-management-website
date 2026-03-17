@@ -1,0 +1,326 @@
+---
+import Dashboard from '../../layouts/Dashboard.astro';
+---
+
+<Dashboard title="APIs" activeTab="apis">
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-[22px] font-semibold tracking-[-0.03em] text-white/90" data-i18n="apis.title">APIs</h1>
+      <p class="text-[13px] text-white/30 mt-1" data-i18n="apis.subtitle">Send requests and manage collections</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="db-btn-secondary" id="import-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        <span data-i18n="apis.import">Import</span>
+      </button>
+      <button class="db-btn-primary" id="new-collection-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span data-i18n="apis.newCollection">New Collection</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Request Builder -->
+  <div class="db-card mb-6">
+    <div class="flex items-center gap-2 mb-5">
+      <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+      <span class="text-[12px] font-semibold text-white/40 uppercase tracking-[0.05em]" data-i18n="apis.requestBuilder">Request Builder</span>
+    </div>
+
+    <!-- URL bar -->
+    <div class="flex gap-2 mb-5">
+      <!-- Custom method dropdown -->
+      <div class="relative" id="method-dropdown">
+        <input type="hidden" id="method-select" value="GET" />
+        <button id="method-btn" class="method-trigger" style="color: #10B981;">
+          <span id="method-label">GET</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="opacity-40"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="method-menu" class="method-menu hidden">
+          <button class="method-option" data-value="GET" data-color="#10B981">GET</button>
+          <button class="method-option" data-value="POST" data-color="#3B82F6">POST</button>
+          <button class="method-option" data-value="PUT" data-color="#F59E0B">PUT</button>
+          <button class="method-option" data-value="PATCH" data-color="#8B5CF6">PATCH</button>
+          <button class="method-option" data-value="DELETE" data-color="#EF4444">DELETE</button>
+          <button class="method-option" data-value="HEAD" data-color="#6B7280">HEAD</button>
+          <button class="method-option" data-value="OPTIONS" data-color="#EC4899">OPTIONS</button>
+        </div>
+      </div>
+      <input type="text" id="url-input" placeholder="https://api.example.com/v1/users" class="db-input flex-1 font-mono text-[13px]" />
+      <button id="send-btn" class="px-6 py-2.5 bg-gradient-to-r from-[#FF9500] to-[#FF7A00] text-white text-[13px] font-semibold rounded-lg hover:opacity-90 transition-opacity shadow-lg shadow-orange-500/20 active:scale-[0.98]">
+        <span data-i18n="apis.send">Send</span>
+      </button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-0 border-b border-white/[0.06] mb-4">
+      <button class="req-tab active" data-tab="headers" data-i18n="apis.headers">Headers</button>
+      <button class="req-tab" data-tab="body" data-i18n="apis.body">Body</button>
+      <button class="req-tab" data-tab="auth" data-i18n="apis.auth">Auth</button>
+      <button class="req-tab" data-tab="params" data-i18n="apis.query">Query</button>
+    </div>
+
+    <!-- Panels -->
+    <div id="panel-headers" class="req-panel">
+      <div class="grid grid-cols-[1fr_1fr_28px] gap-2 mb-2 items-center">
+        <input type="text" placeholder="Key" class="db-input font-mono text-[12px]" value="Content-Type" />
+        <input type="text" placeholder="Value" class="db-input font-mono text-[12px]" value="application/json" />
+        <button class="p-1 rounded hover:bg-red-500/10 text-white/15 hover:text-red-400 transition-colors text-[16px]">×</button>
+      </div>
+      <button class="text-[11px] text-white/25 hover:text-[#FF9500] font-medium transition-colors mt-1" data-i18n="apis.addHeader">+ Add header</button>
+    </div>
+
+    <div id="panel-body" class="req-panel hidden">
+      <textarea id="body-input" rows="8" placeholder='{"key": "value"}' class="db-input w-full font-mono text-[12px] resize-none leading-[1.7]"></textarea>
+    </div>
+
+    <div id="panel-auth" class="req-panel hidden">
+      <select class="db-select w-full mb-3">
+        <option>No Auth</option>
+        <option>Bearer Token</option>
+        <option>Basic Auth</option>
+        <option>API Key</option>
+        <option>OAuth 2.0</option>
+      </select>
+    </div>
+
+    <div id="panel-params" class="req-panel hidden">
+      <div class="grid grid-cols-[1fr_1fr_28px] gap-2 mb-2 items-center">
+        <input type="text" placeholder="Key" class="db-input font-mono text-[12px]" />
+        <input type="text" placeholder="Value" class="db-input font-mono text-[12px]" />
+        <button class="p-1 rounded hover:bg-red-500/10 text-white/15 hover:text-red-400 transition-colors text-[16px]">×</button>
+      </div>
+      <button class="text-[11px] text-white/25 hover:text-[#FF9500] font-medium transition-colors mt-1" data-i18n="apis.addParam">+ Add parameter</button>
+    </div>
+  </div>
+
+  <!-- Response -->
+  <div class="db-card" id="response-panel" style="display: none;">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="db-card-header !mb-0">Response</span>
+      <div class="flex items-center gap-3 ml-auto text-[12px]">
+        <span id="res-status" class="font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md">200 OK</span>
+        <span id="res-time" class="text-white/30">0ms</span>
+        <span id="res-size" class="text-white/30">0 B</span>
+      </div>
+    </div>
+    <pre id="res-body" class="bg-[#09090B] border border-white/[0.06] rounded-lg p-5 font-mono text-[12px] text-white/60 overflow-auto max-h-[500px] leading-[1.8]"></pre>
+  </div>
+
+  <!-- Collections empty state -->
+  <div class="db-card mt-6" id="empty-collections">
+    <div class="flex flex-col items-center justify-center py-12 text-center">
+      <div class="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-white/15"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <p class="text-[15px] font-semibold text-white/70 mb-1" data-i18n="apis.noCollections">No collections yet</p>
+      <p class="text-[13px] text-white/25 max-w-[300px] mb-5" data-i18n="apis.createFirst">Create your first collection to organize API requests</p>
+      <button class="db-btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span data-i18n="apis.createCollection">Create Collection</span>
+      </button>
+    </div>
+  </div>
+</Dashboard>
+
+<style>
+  .db-btn-primary {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; background: white; color: #09090B;
+    font-size: 13px; font-weight: 600; border-radius: 8px;
+    transition: opacity 0.15s ease; border: none; cursor: pointer;
+  }
+  .db-btn-primary:hover { opacity: 0.9; }
+  .db-btn-secondary {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; background: transparent; color: rgba(255,255,255,0.5);
+    font-size: 13px; font-weight: 500; border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08); transition: all 0.15s ease; cursor: pointer;
+  }
+  .db-btn-secondary:hover { border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8); }
+  .db-input {
+    padding: 9px 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    color: #FAFAFA;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  .db-input:focus { border-color: rgba(255,255,255,0.15); }
+  .db-input::placeholder { color: rgba(255,255,255,0.15); }
+  /* Custom method dropdown */
+  .method-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+    min-width: 110px;
+    justify-content: space-between;
+  }
+  .method-trigger:hover {
+    border-color: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+  }
+  .method-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    min-width: 140px;
+    background: #131316;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 4px;
+    z-index: 50;
+    box-shadow: 0 12px 40px -8px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+    backdrop-filter: blur(20px);
+    animation: dropdownIn 0.15s ease;
+  }
+  @keyframes dropdownIn {
+    from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .method-option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.1s ease;
+    text-align: left;
+  }
+  .method-option:hover {
+    background: rgba(255,255,255,0.06);
+  }
+  .method-option[data-value="GET"] { color: #10B981; }
+  .method-option[data-value="POST"] { color: #3B82F6; }
+  .method-option[data-value="PUT"] { color: #F59E0B; }
+  .method-option[data-value="PATCH"] { color: #8B5CF6; }
+  .method-option[data-value="DELETE"] { color: #EF4444; }
+  .method-option[data-value="HEAD"] { color: #6B7280; }
+  .method-option[data-value="OPTIONS"] { color: #EC4899; }
+
+  .db-select {
+    padding: 9px 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    color: #10B981;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+  }
+  .req-tab {
+    font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.3);
+    padding: 8px 14px; border-bottom: 2px solid transparent;
+    background: none; border-top: none; border-left: none; border-right: none;
+    cursor: pointer; transition: color 0.15s ease;
+  }
+  .req-tab:hover { color: rgba(255,255,255,0.6); }
+  .req-tab.active { color: #FF9500; border-bottom-color: #FF9500; }
+</style>
+
+<script>
+  import { addCallLog, resolveVariables, loadLocal } from '../../lib/syncStore';
+  loadLocal();
+
+  // Tab switching
+  document.querySelectorAll('.req-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.req-tab').forEach((t) => t.classList.remove('active'));
+      document.querySelectorAll('.req-panel').forEach((p) => p.classList.add('hidden'));
+      tab.classList.add('active');
+      document.getElementById(`panel-${(tab as HTMLElement).dataset.tab}`)?.classList.remove('hidden');
+    });
+  });
+
+  // Custom method dropdown
+  const methodBtn = document.getElementById('method-btn') as HTMLButtonElement;
+  const methodMenu = document.getElementById('method-menu') as HTMLDivElement;
+  const methodInput = document.getElementById('method-select') as HTMLInputElement;
+  const methodLabel = document.getElementById('method-label') as HTMLSpanElement;
+
+  methodBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    methodMenu.classList.toggle('hidden');
+  });
+
+  document.querySelectorAll('.method-option').forEach((opt) => {
+    opt.addEventListener('click', () => {
+      const val = (opt as HTMLElement).dataset.value || 'GET';
+      const color = (opt as HTMLElement).dataset.color || '#10B981';
+      methodInput.value = val;
+      methodLabel.textContent = val;
+      methodBtn.style.color = color;
+      methodMenu.classList.add('hidden');
+    });
+  });
+
+  // Close dropdown on outside click
+  document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('method-dropdown');
+    if (dropdown && !dropdown.contains(e.target as Node)) {
+      methodMenu.classList.add('hidden');
+    }
+  });
+
+  // Send request
+  document.getElementById('send-btn')?.addEventListener('click', async () => {
+    const method = methodInput.value;
+    let url = (document.getElementById('url-input') as HTMLInputElement).value;
+    if (!url) return;
+    url = resolveVariables(url);
+
+    const sendBtn = document.getElementById('send-btn') as HTMLButtonElement;
+    sendBtn.textContent = 'Sending...';
+    sendBtn.disabled = true;
+
+    const start = performance.now();
+    try {
+      const bodyInput = (document.getElementById('body-input') as HTMLTextAreaElement)?.value;
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: ['POST','PUT','PATCH'].includes(method) && bodyInput ? bodyInput : undefined,
+      });
+      const elapsed = Math.round(performance.now() - start);
+      const text = await res.text();
+      const size = new Blob([text]).size;
+
+      const statusEl = document.getElementById('res-status') as HTMLElement;
+      statusEl.textContent = `${res.status} ${res.statusText}`;
+      statusEl.style.color = res.status < 400 ? '#10B981' : '#EF4444';
+      statusEl.style.background = res.status < 400 ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)';
+      (document.getElementById('res-time') as HTMLElement).textContent = `${elapsed}ms`;
+      (document.getElementById('res-size') as HTMLElement).textContent = size > 1024 ? `${(size/1024).toFixed(1)} KB` : `${size} B`;
+      try { (document.getElementById('res-body') as HTMLElement).textContent = JSON.stringify(JSON.parse(text), null, 2); }
+      catch { (document.getElementById('res-body') as HTMLElement).textContent = text; }
+      (document.getElementById('response-panel') as HTMLElement).style.display = 'block';
+
+      addCallLog({ endpointId:'', endpointName: url.replace(/https?:\/\//,'').split('/').slice(0,2).join('/'), collectionId:'', url, method, statusCode: res.status, responseTime: elapsed, responseSize: size, success: res.status < 400, timestamp: Date.now(), responseBody: text.slice(0,5000) });
+    } catch (err: any) {
+      const elapsed = Math.round(performance.now() - start);
+      const statusEl = document.getElementById('res-status') as HTMLElement;
+      statusEl.textContent = 'Error'; statusEl.style.color = '#EF4444'; statusEl.style.background = 'rgba(239,68,68,0.1)';
+      (document.getElementById('res-body') as HTMLElement).textContent = err.message || 'Request failed';
+      (document.getElementById('response-panel') as HTMLElement).style.display = 'block';
+      addCallLog({ endpointId:'', endpointName: url.replace(/https?:\/\//,'').split('/').slice(0,2).join('/'), collectionId:'', url, method, statusCode: 0, responseTime: elapsed, responseSize: 0, success: false, timestamp: Date.now() });
+    }
+    sendBtn.textContent = 'Send'; sendBtn.disabled = false;
+  });
+</script>

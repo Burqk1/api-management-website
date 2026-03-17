@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+
+const testimonials = [
+  {
+    quote: "Fetchlab replaced my entire desktop setup. I can debug production APIs from anywhere now.",
+    name: "Sarah Chen",
+    role: "Senior Backend Engineer",
+    company: "Vercel",
+  },
+  {
+    quote: "The pre/post scripting is surprisingly powerful for a mobile app. It handles our CI/CD webhook testing perfectly.",
+    name: "Marcus Rivera",
+    role: "DevOps Lead",
+    company: "Railway",
+  },
+  {
+    quote: "Having encrypted cloud sync means I can switch between devices without worrying about API keys floating around.",
+    name: "Aisha Patel",
+    role: "Security Engineer",
+    company: "Stripe",
+  },
+  {
+    quote: "The GraphQL explorer alone is worth it. Introspection on my phone during a production incident saved us hours.",
+    name: "Tom Lindqvist",
+    role: "Full-Stack Developer",
+    company: "Supabase",
+  },
+  {
+    quote: "We've standardized on Fetchlab for all our mobile API testing. The Postman import made switching painless.",
+    name: "Elena Kowalski",
+    role: "Engineering Manager",
+    company: "Resend",
+  },
+  {
+    quote: "Best developer tool on iOS, period. 78 tools in one app and it actually feels native.",
+    name: "James Okonkwo",
+    role: "iOS Developer",
+    company: "Neon",
+  },
+];
+---
+
+<Base title="Customers — Fetchlab" description="See how developer teams use Fetchlab to test and debug APIs on iOS.">
+  <div class="pt-28 pb-20 px-6">
+    <div class="max-w-[900px] mx-auto">
+      <h1 class="text-[32px] sm:text-[40px] font-medium tracking-[-0.04em] text-[#F5F5F5] mb-3">Customers</h1>
+      <p class="text-[15px] text-[#5C5C5C] mb-14 max-w-[520px]">
+        Trusted by developers and engineering teams at companies of all sizes.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {testimonials.map((t) => (
+          <div class="bg-[#111113] border border-[#1E1E21] rounded-xl p-6 flex flex-col">
+            <p class="text-[13px] text-[#8B8B8B] leading-[1.6] mb-5 flex-1">"{t.quote}"</p>
+            <div>
+              <div class="text-[13px] font-medium text-[#F5F5F5]">{t.name}</div>
+              <div class="text-[12px] text-[#5C5C5C]">{t.role}, {t.company}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

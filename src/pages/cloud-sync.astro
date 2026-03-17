@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Cloud Sync — Fetchlab" description="End-to-end encrypted cloud sync for your API collections, environments, and settings.">
+  <div class="pt-28 pb-20 px-6">
+    <div class="max-w-[780px] mx-auto">
+      <h1 class="text-[32px] sm:text-[40px] font-medium tracking-[-0.04em] text-[#F5F5F5] mb-3">Cloud Sync</h1>
+      <p class="text-[15px] text-[#5C5C5C] mb-14 max-w-[520px]">
+        Keep your collections, environments, and settings in sync across all your devices. End-to-end encrypted — we can't read your data.
+      </p>
+
+      <!-- How it works -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[#1E1E21] rounded-xl overflow-hidden border border-[#1E1E21] mb-8">
+        <div class="bg-[#0A0A0B] p-7 text-center">
+          <div class="text-[24px] mb-2">1</div>
+          <h3 class="text-[14px] font-medium text-[#F5F5F5] mb-2">Encrypt locally</h3>
+          <p class="text-[12px] text-[#5C5C5C] leading-relaxed">Data is encrypted on your device with AES-256-GCM before upload.</p>
+        </div>
+        <div class="bg-[#0A0A0B] p-7 text-center">
+          <div class="text-[24px] mb-2">2</div>
+          <h3 class="text-[14px] font-medium text-[#F5F5F5] mb-2">Sync securely</h3>
+          <p class="text-[12px] text-[#5C5C5C] leading-relaxed">Encrypted blobs transfer over TLS. Our servers store only ciphertext.</p>
+        </div>
+        <div class="bg-[#0A0A0B] p-7 text-center">
+          <div class="text-[24px] mb-2">3</div>
+          <h3 class="text-[14px] font-medium text-[#F5F5F5] mb-2">Decrypt on device</h3>
+          <p class="text-[12px] text-[#5C5C5C] leading-relaxed">Only your devices hold the key. Decryption happens locally.</p>
+        </div>
+      </div>
+
+      <!-- What syncs -->
+      <div class="bg-[#111113] border border-[#1E1E21] rounded-xl p-7">
+        <h3 class="text-[15px] font-medium text-[#F5F5F5] mb-4">What gets synced</h3>
+        <div class="grid grid-cols-2 gap-2.5">
+          {['Collections', 'Environments', 'Variables', 'Request history', 'Settings', 'Scripts'].map((item) => (
+            <div class="flex items-center gap-2.5 text-[13px] text-[#6B6B6B]">
+              <svg class="w-3.5 h-3.5 text-accent shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

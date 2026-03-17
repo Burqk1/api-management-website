@@ -1,0 +1,40 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="AI Analysis" description="AI-powered API response analysis and suggestions" color="#F59E0B">
+  <div class="db-card mb-4">
+    <div class="mb-4"><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Paste API Response</label><textarea id="ai-input" rows="10" class="w-full p-3 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/60 resize-none leading-[1.7] outline-none" placeholder='{"users": [{"id": 1, "name": "John", "email": "john@test.com"}], "total": 1}'></textarea></div>
+    <div class="flex gap-2">
+      <button class="px-5 py-2.5 bg-amber-500 text-white text-[13px] font-semibold rounded-lg hover:bg-amber-600 transition-colors border-none cursor-pointer flex-1" id="ai-analyze">Analyze Response</button>
+      <button class="px-4 py-2.5 bg-white/[0.04] text-white/40 text-[13px] font-medium rounded-lg border border-white/[0.06] cursor-pointer hover:bg-white/[0.08] transition-colors" id="ai-suggest">Suggest Types</button>
+    </div>
+  </div>
+  <div class="db-card hidden" id="ai-output">
+    <div class="db-card-header">Analysis</div>
+    <div id="ai-result" class="text-[13px] text-white/60 leading-relaxed space-y-3"></div>
+  </div>
+</ToolPage>
+<script>
+  document.getElementById('ai-analyze')!.addEventListener('click', () => {
+    const input = (document.getElementById('ai-input') as HTMLTextAreaElement).value;
+    if (!input) return;
+    try {
+      const data = JSON.parse(input);
+      const result = document.getElementById('ai-result')!;
+      const output = document.getElementById('ai-output')!;
+      const keys = Object.keys(data);
+      const analysis = [
+        `Structure: ${Array.isArray(data) ? 'Array' : 'Object'} with ${keys.length} top-level keys`,
+        `Keys: ${keys.join(', ')}`,
+        `Size: ${new Blob([input]).size} bytes`,
+      ];
+      if (Array.isArray(data)) analysis.push(`Array length: ${data.length} items`);
+      keys.forEach(k => {
+        const v = data[k];
+        analysis.push(`"${k}": ${Array.isArray(v) ? `Array[${v.length}]` : typeof v}`);
+      });
+      result.textContent = analysis.join('\n');
+      output.classList.remove('hidden');
+    } catch (e: any) { alert('Invalid JSON: ' + e.message); }
+  });
+</script>

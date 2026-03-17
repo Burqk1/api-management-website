@@ -1,0 +1,18 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="Git Sync" description="Sync collections with a Git repository for version control" color="#EF4444">
+  <div class="db-card mb-4">
+    <div class="db-card-header">Repository Configuration</div>
+    <div class="space-y-3 mb-4">
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Repository URL</label><input type="text" placeholder="https://github.com/org/api-collections.git" class="w-full p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[13px] text-white/60 outline-none" /></div>
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Branch</label><input type="text" value="main" class="w-full p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[13px] text-white/60 outline-none" /></div>
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Access Token</label><input type="password" placeholder="ghp_xxxxxxxxxxxx" class="w-full p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[13px] text-white/60 outline-none" /></div>
+    </div>
+    <div class="flex gap-2">
+      <button class="px-5 py-2.5 bg-red-500 text-white text-[13px] font-semibold rounded-lg hover:bg-red-600 transition-colors border-none cursor-pointer">Connect</button>
+      <button class="px-4 py-2.5 bg-white/[0.04] text-white/40 text-[13px] rounded-lg border border-white/[0.06] cursor-pointer hover:bg-white/[0.08] transition-colors">Pull</button>
+      <button class="px-4 py-2.5 bg-white/[0.04] text-white/40 text-[13px] rounded-lg border border-white/[0.06] cursor-pointer hover:bg-white/[0.08] transition-colors">Push</button>
+    </div>
+  </div>
+</ToolPage>

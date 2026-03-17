@@ -1,0 +1,75 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+
+<ToolPage title="GraphQL Explorer" description="Build and execute GraphQL queries with schema introspection" color="#D946EF">
+  <div class="db-card mb-4">
+    <div class="flex gap-2 mb-4">
+      <input type="text" id="gql-url" placeholder="https://api.example.com/graphql" class="db-input flex-1 font-mono text-[13px]" />
+      <button id="gql-introspect" class="px-4 py-2 bg-white/[0.06] text-white/50 text-[12px] font-medium rounded-lg border border-white/[0.08] cursor-pointer hover:bg-white/[0.1] transition-colors">Introspect</button>
+      <button id="gql-run" class="px-5 py-2 bg-fuchsia-500 text-white text-[13px] font-semibold rounded-lg hover:bg-fuchsia-600 transition-colors border-none cursor-pointer">Run Query</button>
+    </div>
+
+    <!-- Query editor -->
+    <div class="mb-3">
+      <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Query</label>
+      <textarea id="gql-query" rows="8" class="db-input w-full font-mono text-[12px] resize-none leading-[1.8]" placeholder="query {
+  users {
+    id
+    name
+    email
+  }
+}"></textarea>
+    </div>
+
+    <!-- Variables -->
+    <div>
+      <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Variables (JSON)</label>
+      <textarea id="gql-vars" rows="3" class="db-input w-full font-mono text-[12px] resize-none leading-[1.8]" placeholder='{"limit": 10}'></textarea>
+    </div>
+  </div>
+
+  <!-- Response -->
+  <div class="db-card" id="gql-response" style="display:none;">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="db-card-header !mb-0">Response</span>
+      <span id="gql-time" class="text-[11px] text-white/25 ml-auto"></span>
+    </div>
+    <pre id="gql-result" class="bg-[#09090B] border border-white/[0.06] rounded-lg p-4 font-mono text-[12px] text-white/60 overflow-auto max-h-[400px] leading-[1.7]"></pre>
+  </div>
+</ToolPage>
+
+<style>
+  .db-input { padding:9px 12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; color:#FAFAFA; font-size:13px; outline:none; }
+  .db-input:focus { border-color:rgba(255,255,255,0.15); }
+  .db-input::placeholder { color:rgba(255,255,255,0.15); }
+</style>
+
+<script>
+  document.getElementById('gql-run')!.addEventListener('click', async () => {
+    const url = (document.getElementById('gql-url') as HTMLInputElement).value;
+    const query = (document.getElementById('gql-query') as HTMLTextAreaElement).value;
+    const varsStr = (document.getElementById('gql-vars') as HTMLTextAreaElement).value;
+    if (!url || !query) return;
+
+    let variables = {};
+    try { if (varsStr) variables = JSON.parse(varsStr); } catch {}
+
+    const start = performance.now();
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, variables }),
+      });
+      const elapsed = Math.round(performance.now() - start);
+      const data = await res.json();
+      document.getElementById('gql-time')!.textContent = `${elapsed}ms`;
+      (document.getElementById('gql-result') as HTMLElement).textContent = JSON.stringify(data, null, 2);
+      (document.getElementById('gql-response') as HTMLElement).style.display = 'block';
+    } catch (e: any) {
+      (document.getElementById('gql-result') as HTMLElement).textContent = `Error: ${e.message}`;
+      (document.getElementById('gql-response') as HTMLElement).style.display = 'block';
+    }
+  });
+</script>

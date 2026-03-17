@@ -1,0 +1,14 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="Data-Driven Testing" description="Run API tests with multiple data sets from CSV or JSON" color="#06B6D4">
+  <div class="db-card mb-4">
+    <div class="mb-4"><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Test Data (JSON Array)</label>
+    <textarea rows="8" class="w-full p-3 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/50 resize-none leading-[1.7] outline-none" placeholder='[
+  {"email": "user1@test.com", "password": "pass1"},
+  {"email": "user2@test.com", "password": "pass2"}
+]'></textarea></div>
+    <div class="mb-4"><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Request URL</label><input type="text" placeholder="https://api.example.com/login" class="w-full p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[13px] text-white/60 outline-none" /></div>
+    <button class="px-5 py-2.5 bg-cyan-500 text-white text-[13px] font-semibold rounded-lg hover:bg-cyan-600 transition-colors border-none cursor-pointer">Run All Tests</button>
+  </div>
+</ToolPage>

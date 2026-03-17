@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="GraphQL Explorer — Fetchlab" description="Full-featured GraphQL client with introspection, schema browser, and query builder on iOS.">
+  <div class="pt-28 pb-20 px-6">
+    <div class="max-w-[780px] mx-auto">
+      <h1 class="text-[32px] sm:text-[40px] font-medium tracking-[-0.04em] text-[#F5F5F5] mb-3">GraphQL Explorer</h1>
+      <p class="text-[15px] text-[#5C5C5C] mb-14 max-w-[520px]">
+        A complete GraphQL development environment in your pocket. Introspect schemas, build queries, and explore your API — all from your iPhone.
+      </p>
+
+      <div class="space-y-4">
+        <div class="bg-[#111113] border border-[#1E1E21] rounded-xl p-7">
+          <h3 class="text-[15px] font-medium text-[#F5F5F5] mb-2">Schema Introspection</h3>
+          <p class="text-[13px] text-[#5C5C5C] leading-[1.6] mb-5">
+            Automatically fetch and display your GraphQL schema. Browse types, fields, arguments, and descriptions with full search support.
+          </p>
+          <div class="bg-[#0A0A0B] rounded-lg border border-[#1E1E21] p-4 font-mono text-[12px] text-[#6B6B6B] leading-[1.8]">
+            <div><span class="text-[#F79CE0]">type</span> <span class="text-[#89D196]">User</span> {"{"}</div>
+            <div class="pl-4"><span class="text-[#8FA4FF]">id</span>: <span class="text-[#89D196]">ID!</span></div>
+            <div class="pl-4"><span class="text-[#8FA4FF]">name</span>: <span class="text-[#89D196]">String!</span></div>
+            <div class="pl-4"><span class="text-[#8FA4FF]">email</span>: <span class="text-[#89D196]">String!</span></div>
+            <div class="pl-4"><span class="text-[#8FA4FF]">posts</span>: <span class="text-[#89D196]">[Post!]!</span></div>
+            <div>{"}"}</div>
+          </div>
+        </div>
+
+        <div class="bg-[#111113] border border-[#1E1E21] rounded-xl p-7">
+          <h3 class="text-[15px] font-medium text-[#F5F5F5] mb-2">Visual Query Builder</h3>
+          <p class="text-[13px] text-[#5C5C5C] leading-[1.6]">
+            Build queries with autocomplete, syntax highlighting, and inline documentation. Variables, fragments, and directives are all supported.
+          </p>
+        </div>
+
+        <div class="bg-[#111113] border border-[#1E1E21] rounded-xl p-7">
+          <h3 class="text-[15px] font-medium text-[#F5F5F5] mb-2">Subscriptions Support</h3>
+          <p class="text-[13px] text-[#5C5C5C] leading-[1.6]">
+            Connect to GraphQL subscriptions over WebSocket. Monitor real-time events and inspect payloads as they arrive.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

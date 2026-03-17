@@ -1,0 +1,58 @@
+---
+const faqs = [
+  {
+    q: 'Is Fetchlab free to use?',
+    a: 'Yes! The free plan includes 50 requests per day, 3 collections, and access to basic tools. No credit card required to get started.',
+  },
+  {
+    q: 'Does it work offline?',
+    a: 'Absolutely. All your collections and requests are stored locally on your device. Cloud sync is optional and available on Pro and Team plans.',
+  },
+  {
+    q: 'Can I import Postman collections?',
+    a: 'Yes, Fetchlab supports importing Postman Collection v2.1 format, cURL commands, OpenAPI/Swagger specs, and HAR files.',
+  },
+  {
+    q: 'How does cloud sync work?',
+    a: 'Cloud sync uses end-to-end encryption (AES-256-GCM) so your API data is encrypted before it leaves your device. Only you can decrypt your data.',
+  },
+  {
+    q: 'What payment methods do you accept?',
+    a: 'All payments are processed through the App Store. You can use any payment method linked to your Apple ID, including credit cards, Apple Pay, and gift cards.',
+  },
+  {
+    q: 'Can I cancel my subscription anytime?',
+    a: 'Yes, you can cancel anytime through your App Store subscription settings. You\'ll retain access until the end of your current billing period.',
+  },
+];
+---
+
+<section id="faq" class="py-[120px] sm:py-[140px] px-6">
+  <div class="max-w-[640px] mx-auto">
+    <!-- Section header -->
+    <div class="mb-12">
+      <h2 class="observe text-[32px] sm:text-[40px] font-medium tracking-[-0.04em] text-[#F5F5F5]">
+        Frequently asked questions
+      </h2>
+    </div>
+
+    <!-- Accordion -->
+    <div class="observe" style="animation-delay: 100ms">
+      {faqs.map((faq, i) => (
+        <div class={`faq-item border-b border-[#1E1E21] ${i === 0 ? 'active' : ''}`}>
+          <button class="faq-trigger w-full flex items-center justify-between py-5 text-left focus-visible:outline-none group">
+            <span class="text-[15px] font-medium text-[#F5F5F5] pr-4 group-hover:text-white transition-colors">{faq.q}</span>
+            <svg class="faq-chevron w-4 h-4 text-[#5C5C5C] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="faq-content">
+            <div>
+              <p class="text-sm text-[#8B8B8B] leading-relaxed pb-1">{faq.a}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="AI Type Generator" description="Generate TypeScript interfaces from API responses" color="#3B82F6">
+  <div class="db-card mb-4">
+    <div class="mb-4"><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Paste JSON Response</label><textarea id="tg-input" rows="10" class="w-full p-3 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/60 resize-none leading-[1.7] outline-none" placeholder='{"id": 1, "name": "John", "email": "john@test.com", "roles": ["admin"]}'></textarea></div>
+    <div class="flex gap-2 mb-4">
+      <input type="text" id="tg-name" placeholder="Interface name (e.g. User)" class="flex-1 p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg text-[13px] text-white/60 outline-none" />
+      <button id="tg-gen" class="px-5 py-2 bg-blue-500 text-white text-[13px] font-semibold rounded-lg hover:bg-blue-600 transition-colors border-none cursor-pointer">Generate</button>
+    </div>
+  </div>
+  <div class="db-card hidden" id="tg-output">
+    <div class="flex items-center justify-between mb-3"><span class="db-card-header !mb-0">TypeScript Interface</span><button id="tg-copy" class="text-[11px] text-white/30 hover:text-white/60 transition-colors cursor-pointer bg-transparent border-none">Copy</button></div>
+    <pre id="tg-code" class="bg-[#09090B] border border-white/[0.06] rounded-lg p-4 font-mono text-[12px] text-blue-300/70 overflow-auto max-h-[400px] leading-[1.7]"></pre>
+  </div>
+</ToolPage>
+<script>
+  function jsonToTs(obj: any, name: string, indent: string = ''): string {
+    const lines: string[] = [`${indent}interface ${name} {`];
+    for (const [key, val] of Object.entries(obj)) {
+      let type = typeof val;
+      if (val === null) type = 'null';
+      else if (Array.isArray(val)) { type = val.length > 0 ? `${typeof val[0]}[]` : 'any[]'; if (typeof val[0] === 'object' && val[0] !== null) type = `${name}${key.charAt(0).toUpperCase() + key.slice(1)}Item[]`; }
+      else if (type === 'object') type = `${name}${key.charAt(0).toUpperCase() + key.slice(1)}`;
+      lines.push(`${indent}  ${key}: ${type};`);
+    }
+    lines.push(`${indent}}`);
+    return lines.join('\n');
+  }
+  document.getElementById('tg-gen')!.addEventListener('click', () => {
+    const input = (document.getElementById('tg-input') as HTMLTextAreaElement).value;
+    const name = (document.getElementById('tg-name') as HTMLInputElement).value || 'ApiResponse';
+    try {
+      const data = JSON.parse(input);
+      (document.getElementById('tg-code') as HTMLElement).textContent = jsonToTs(data, name);
+      document.getElementById('tg-output')!.classList.remove('hidden');
+    } catch (e: any) { alert('Invalid JSON: ' + e.message); }
+  });
+  document.getElementById('tg-copy')!.addEventListener('click', () => {
+    navigator.clipboard.writeText((document.getElementById('tg-code') as HTMLElement).textContent || '');
+    document.getElementById('tg-copy')!.textContent = 'Copied!';
+    setTimeout(() => { document.getElementById('tg-copy')!.textContent = 'Copy'; }, 2000);
+  });
+</script>

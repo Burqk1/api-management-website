@@ -1,0 +1,64 @@
+---
+const features = [
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+    title: '78+ Developer Tools',
+    description: 'Everything from cURL import to load testing, code generation to security scanning.'
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>`,
+    title: 'Pre & Post Scripts',
+    description: 'Postman-compatible scripting engine with sandboxed execution and test assertions.'
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20"/><path d="M2 12h4M18 12h4"/></svg>`,
+    title: 'GraphQL Explorer',
+    description: 'Introspection, schema browser, query builder with variable support.'
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>`,
+    title: 'Encrypted Cloud Sync',
+    description: 'End-to-end encrypted sync across devices. Your data stays yours.'
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>`,
+    title: 'AI-Powered Analysis',
+    description: 'Smart suggestions, type generation, and response analysis powered by AI.'
+  },
+  {
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+    title: 'Real-time Monitoring',
+    description: 'Health checks, uptime alerts, and performance tracking for your APIs.'
+  }
+];
+---
+
+<section id="features" class="py-[100px] sm:py-[120px] px-6">
+  <div class="max-w-container mx-auto">
+    <!-- Section header — Linear left-aligned style -->
+    <div class="observe flex items-end justify-between mb-14 border-b border-[#1E1E21] pb-6">
+      <div>
+        <h2 class="text-[24px] sm:text-[28px] font-medium tracking-[-0.03em] text-[#F5F5F5]">
+          Features
+        </h2>
+      </div>
+      <a href="#" class="hidden sm:inline-flex items-center gap-1.5 text-[13px] text-[#5C5C5C] hover:text-[#8B8B8B] transition-colors font-medium">
+        See all features
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Feature grid — Linear style thin border grid -->
+    <div class="stagger-children grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-l border-[#1E1E21]">
+      {features.map((feature) => (
+        <div class="group p-7 sm:p-8 border-b border-r border-[#1E1E21] hover:bg-[#111113] transition-colors duration-300">
+          <div class="text-[#5C5C5C] mb-5 group-hover:text-[#8B8B8B] transition-colors duration-300">
+            <Fragment set:html={feature.icon} />
+          </div>
+          <h3 class="text-[15px] font-medium text-[#F5F5F5] mb-2 tracking-[-0.02em]">{feature.title}</h3>
+          <p class="text-[13px] text-[#5C5C5C] leading-[1.6]">{feature.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
