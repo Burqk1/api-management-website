@@ -1,0 +1,89 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+
+<ToolPage title="Benchmark" description="Run performance benchmarks against your API endpoints" color="#EF4444">
+  <div class="db-card mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+      <div>
+        <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">URL</label>
+        <input type="text" id="bench-url" placeholder="https://api.example.com/v1/users" class="db-input w-full font-mono text-[13px]" />
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Requests</label>
+          <input type="number" id="bench-count" value="50" min="1" max="500" class="db-input w-full text-[13px]" />
+        </div>
+        <div>
+          <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Concurrency</label>
+          <input type="number" id="bench-concurrency" value="5" min="1" max="50" class="db-input w-full text-[13px]" />
+        </div>
+      </div>
+    </div>
+    <button id="bench-run" class="px-5 py-2.5 bg-red-500 text-white text-[13px] font-semibold rounded-lg hover:bg-red-600 transition-colors border-none cursor-pointer w-full">
+      Run Benchmark
+    </button>
+  </div>
+
+  <!-- Results -->
+  <div class="db-card hidden" id="bench-results">
+    <div class="db-card-header">Results</div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+      <div class="text-center"><div class="text-[20px] font-bold text-white" id="b-avg">—</div><div class="text-[10px] text-white/25 mt-1">Avg (ms)</div></div>
+      <div class="text-center"><div class="text-[20px] font-bold text-white" id="b-min">—</div><div class="text-[10px] text-white/25 mt-1">Min (ms)</div></div>
+      <div class="text-center"><div class="text-[20px] font-bold text-white" id="b-max">—</div><div class="text-[10px] text-white/25 mt-1">Max (ms)</div></div>
+      <div class="text-center"><div class="text-[20px] font-bold text-emerald-400" id="b-success">—</div><div class="text-[10px] text-white/25 mt-1">Success %</div></div>
+    </div>
+    <div id="b-progress" class="h-2 rounded-full bg-white/[0.06] overflow-hidden">
+      <div class="h-full bg-gradient-to-r from-red-500 to-orange-500 transition-all duration-300 rounded-full" id="b-bar" style="width:0%"></div>
+    </div>
+    <div class="text-[11px] text-white/20 mt-2 text-center" id="b-status"></div>
+  </div>
+</ToolPage>
+
+<style>
+  .db-input { padding:9px 12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; color:#FAFAFA; font-size:13px; outline:none; }
+  .db-input:focus { border-color:rgba(255,255,255,0.15); }
+  .db-input::placeholder { color:rgba(255,255,255,0.15); }
+</style>
+
+<script>
+  document.getElementById('bench-run')!.addEventListener('click', async () => {
+    const url = (document.getElementById('bench-url') as HTMLInputElement).value;
+    const total = parseInt((document.getElementById('bench-count') as HTMLInputElement).value) || 50;
+    const concurrency = parseInt((document.getElementById('bench-concurrency') as HTMLInputElement).value) || 5;
+    if (!url) return;
+
+    const results: { time: number; ok: boolean }[] = [];
+    document.getElementById('bench-results')!.classList.remove('hidden');
+    const bar = document.getElementById('b-bar') as HTMLElement;
+    const status = document.getElementById('b-status')!;
+    const btn = document.getElementById('bench-run') as HTMLButtonElement;
+    btn.disabled = true; btn.textContent = 'Running...';
+
+    for (let i = 0; i < total; i += concurrency) {
+      const batch = Math.min(concurrency, total - i);
+      const promises = Array.from({ length: batch }, async () => {
+        const start = performance.now();
+        try {
+          const res = await fetch(url, { method: 'GET', cache: 'no-store' });
+          return { time: Math.round(performance.now() - start), ok: res.ok };
+        } catch { return { time: Math.round(performance.now() - start), ok: false }; }
+      });
+      const batch_results = await Promise.all(promises);
+      results.push(...batch_results);
+      const pct = Math.round((results.length / total) * 100);
+      bar.style.width = pct + '%';
+      status.textContent = `${results.length} / ${total} requests completed`;
+
+      const times = results.map(r => r.time);
+      document.getElementById('b-avg')!.textContent = String(Math.round(times.reduce((a, b) => a + b, 0) / times.length));
+      document.getElementById('b-min')!.textContent = String(Math.min(...times));
+      document.getElementById('b-max')!.textContent = String(Math.max(...times));
+      document.getElementById('b-success')!.textContent = Math.round((results.filter(r => r.ok).length / results.length) * 100) + '%';
+    }
+
+    btn.disabled = false; btn.textContent = 'Run Benchmark';
+    status.textContent = `Completed — ${results.length} requests`;
+  });
+</script>

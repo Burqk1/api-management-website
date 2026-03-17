@@ -1,0 +1,104 @@
+---
+import { HeroVisual } from './ui/HeroVisual';
+---
+
+<section class="relative min-h-[100vh] flex flex-col items-center justify-center px-6 pt-20 pb-24 overflow-hidden">
+  <!-- Background -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <!-- Dot grid -->
+    <div class="dot-grid-bg"></div>
+    <!-- Orange radial glow -->
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 40% at 50% 30%, rgba(255,149,0,0.06) 0%, transparent 70%);"></div>
+    <!-- Bottom fade -->
+    <div class="absolute bottom-0 left-0 right-0 h-64" style="background: linear-gradient(to top, #0A0A0B, transparent);"></div>
+  </div>
+
+  <!-- Content — centered like Linear -->
+  <div class="relative z-10 text-center max-w-[840px] mx-auto">
+    <!-- Small label -->
+    <div class="observe inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#1E1E21] bg-[#131316]/80 mb-8">
+      <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+      <span class="text-[12px] text-[#8B8B8B] font-medium tracking-wide">Now available on iOS</span>
+    </div>
+
+    <!-- Heading — large centered -->
+    <h1 class="observe text-[44px] sm:text-[64px] lg:text-[80px] font-medium tracking-[-0.04em] leading-[1.05] text-[#F5F5F5] mb-6">
+      API testing,<br class="hidden sm:block" />
+      built for mobile
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="observe text-[16px] sm:text-[18px] text-[#6B6B6B] max-w-[520px] mx-auto leading-[1.6] mb-10" style="animation-delay: 100ms">
+      Professional-grade tools, pre/post scripts, GraphQL, and encrypted cloud sync. Purpose-built for iOS.
+    </p>
+
+    <!-- CTA Buttons — Linear style -->
+    <div class="observe flex flex-col sm:flex-row items-center justify-center gap-3" style="animation-delay: 200ms">
+      <a href="#" class="hero-btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        Download for iOS
+      </a>
+      <a href="#features" class="hero-btn-ghost">
+        See features
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17L17 7M17 7H7M17 7v10"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Animated product visual -->
+  <div class="relative z-10 w-full max-w-[1100px] mx-auto mt-16 sm:mt-24 px-4">
+    <HeroVisual client:load />
+  </div>
+</section>
+
+<style>
+  /* Dot grid background */
+  .dot-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, black 20%, transparent 70%);
+  }
+
+  /* Hero buttons */
+  .hero-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: #F5F5F5;
+    color: #0A0A0B;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: opacity 0.15s ease, transform 0.1s ease;
+  }
+  .hero-btn-primary:hover {
+    opacity: 0.9;
+  }
+  .hero-btn-primary:active {
+    transform: scale(0.98);
+  }
+  .hero-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    color: #8B8B8B;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .hero-btn-ghost:hover {
+    color: #F5F5F5;
+    border-color: rgba(255,255,255,0.2);
+  }
+</style>

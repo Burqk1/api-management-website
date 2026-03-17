@@ -1,0 +1,115 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+
+<ToolPage title="WebSocket Testing" description="Connect to WebSocket servers and send/receive messages in real-time" color="#EC4899">
+  <div class="db-card mb-4">
+    <div class="flex gap-2 mb-4">
+      <input type="text" id="ws-url" placeholder="wss://echo.websocket.org" class="db-input flex-1 font-mono text-[13px]" />
+      <button id="ws-connect" class="px-5 py-2 bg-emerald-500 text-white text-[13px] font-semibold rounded-lg hover:bg-emerald-600 transition-colors border-none cursor-pointer">Connect</button>
+      <button id="ws-disconnect" class="px-5 py-2 bg-red-500/10 text-red-400 text-[13px] font-semibold rounded-lg hover:bg-red-500/20 transition-colors border border-red-500/20 cursor-pointer hidden">Disconnect</button>
+    </div>
+    <div class="flex items-center gap-2 text-[12px]">
+      <div class="w-2 h-2 rounded-full bg-white/20" id="ws-status-dot"></div>
+      <span class="text-white/30" id="ws-status-text">Disconnected</span>
+    </div>
+  </div>
+
+  <!-- Message input -->
+  <div class="db-card mb-4">
+    <div class="flex gap-2">
+      <input type="text" id="ws-message" placeholder="Type a message..." class="db-input flex-1 font-mono text-[13px]" disabled />
+      <button id="ws-send" class="px-5 py-2 bg-white/[0.06] text-white/50 text-[13px] font-semibold rounded-lg border border-white/[0.08] cursor-pointer hover:bg-white/[0.1] transition-colors" disabled>Send</button>
+    </div>
+  </div>
+
+  <!-- Messages log -->
+  <div class="db-card">
+    <div class="db-card-header">Messages</div>
+    <div id="ws-log" class="space-y-2 max-h-[400px] overflow-y-auto font-mono text-[12px]">
+      <div class="text-white/15 text-center py-8">No messages yet. Connect to a WebSocket server to begin.</div>
+    </div>
+  </div>
+</ToolPage>
+
+<style>
+  .db-input { padding:9px 12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; color:#FAFAFA; font-size:13px; outline:none; }
+  .db-input:focus { border-color:rgba(255,255,255,0.15); }
+  .db-input::placeholder { color:rgba(255,255,255,0.15); }
+  .db-input:disabled { opacity:0.4; cursor:not-allowed; }
+</style>
+
+<script>
+  let ws: WebSocket | null = null;
+  const log = document.getElementById('ws-log')!;
+  const dot = document.getElementById('ws-status-dot')!;
+  const statusText = document.getElementById('ws-status-text')!;
+  const msgInput = document.getElementById('ws-message') as HTMLInputElement;
+  const sendBtn = document.getElementById('ws-send') as HTMLButtonElement;
+  const connectBtn = document.getElementById('ws-connect') as HTMLButtonElement;
+  const disconnectBtn = document.getElementById('ws-disconnect') as HTMLButtonElement;
+
+  function addMsg(dir: 'sent' | 'received' | 'system', text: string) {
+    const colors = { sent: '#3B82F6', received: '#10B981', system: '#6B7280' };
+    const labels = { sent: '↑ SENT', received: '↓ RECV', system: '● SYS' };
+    const el = document.createElement('div');
+    el.className = 'flex gap-3 items-start py-2 border-b border-white/[0.04]';
+
+    const badge = document.createElement('span');
+    badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded shrink-0 mt-0.5';
+    badge.style.color = colors[dir];
+    badge.style.background = colors[dir] + '15';
+    badge.textContent = labels[dir];
+
+    const msg = document.createElement('span');
+    msg.className = 'text-white/60 break-all';
+    msg.textContent = text;
+
+    const time = document.createElement('span');
+    time.className = 'text-white/15 ml-auto shrink-0 text-[10px]';
+    time.textContent = new Date().toLocaleTimeString();
+
+    el.appendChild(badge);
+    el.appendChild(msg);
+    el.appendChild(time);
+
+    if (log.children.length === 1 && log.children[0].tagName === 'DIV') log.textContent = '';
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function setConnected(connected: boolean) {
+    dot.style.background = connected ? '#10B981' : 'rgba(255,255,255,0.2)';
+    statusText.textContent = connected ? 'Connected' : 'Disconnected';
+    statusText.style.color = connected ? '#10B981' : 'rgba(255,255,255,0.3)';
+    msgInput.disabled = !connected;
+    sendBtn.disabled = !connected;
+    connectBtn.classList.toggle('hidden', connected);
+    disconnectBtn.classList.toggle('hidden', !connected);
+  }
+
+  connectBtn.addEventListener('click', () => {
+    const url = (document.getElementById('ws-url') as HTMLInputElement).value;
+    if (!url) return;
+    try {
+      ws = new WebSocket(url);
+      addMsg('system', `Connecting to ${url}...`);
+      ws.onopen = () => { setConnected(true); addMsg('system', 'Connection established'); };
+      ws.onmessage = (e) => addMsg('received', e.data);
+      ws.onclose = () => { setConnected(false); addMsg('system', 'Connection closed'); ws = null; };
+      ws.onerror = () => addMsg('system', 'Connection error');
+    } catch (e: any) { addMsg('system', `Error: ${e.message}`); }
+  });
+
+  disconnectBtn.addEventListener('click', () => { ws?.close(); });
+
+  sendBtn.addEventListener('click', () => {
+    const msg = msgInput.value;
+    if (!msg || !ws) return;
+    ws.send(msg);
+    addMsg('sent', msg);
+    msgInput.value = '';
+  });
+
+  msgInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendBtn.click(); });
+</script>

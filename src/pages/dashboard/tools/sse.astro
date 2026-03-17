@@ -1,0 +1,93 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+
+<ToolPage title="SSE Testing" description="Connect to Server-Sent Events streams and monitor incoming events" color="#EAB308">
+  <div class="db-card mb-4">
+    <div class="flex gap-2 mb-4">
+      <input type="text" id="sse-url" placeholder="https://api.example.com/events" class="db-input flex-1 font-mono text-[13px]" />
+      <button id="sse-connect" class="px-5 py-2 bg-amber-500 text-white text-[13px] font-semibold rounded-lg hover:bg-amber-600 transition-colors border-none cursor-pointer">Connect</button>
+      <button id="sse-disconnect" class="px-5 py-2 bg-red-500/10 text-red-400 text-[13px] font-semibold rounded-lg border border-red-500/20 cursor-pointer hidden">Disconnect</button>
+    </div>
+    <div class="flex items-center gap-2 text-[12px]">
+      <div class="w-2 h-2 rounded-full bg-white/20" id="sse-dot"></div>
+      <span class="text-white/30" id="sse-status">Disconnected</span>
+      <span class="ml-auto text-white/15" id="sse-count">0 events</span>
+    </div>
+  </div>
+
+  <div class="db-card">
+    <div class="db-card-header">Events Stream</div>
+    <div id="sse-log" class="space-y-1 max-h-[500px] overflow-y-auto font-mono text-[12px]">
+      <div class="text-white/15 text-center py-8">Connect to an SSE endpoint to start receiving events.</div>
+    </div>
+  </div>
+</ToolPage>
+
+<style>
+  .db-input { padding:9px 12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; color:#FAFAFA; font-size:13px; outline:none; }
+  .db-input:focus { border-color:rgba(255,255,255,0.15); }
+  .db-input::placeholder { color:rgba(255,255,255,0.15); }
+</style>
+
+<script>
+  let source: EventSource | null = null;
+  let count = 0;
+  const log = document.getElementById('sse-log')!;
+
+  function addEvent(type: string, data: string) {
+    const el = document.createElement('div');
+    el.className = 'flex gap-3 items-start py-2 border-b border-white/[0.04]';
+
+    const badge = document.createElement('span');
+    badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded shrink-0 bg-amber-500/15 text-amber-400';
+    badge.textContent = type || 'message';
+
+    const msg = document.createElement('span');
+    msg.className = 'text-white/60 break-all flex-1';
+    msg.textContent = data;
+
+    const time = document.createElement('span');
+    time.className = 'text-white/15 shrink-0 text-[10px]';
+    time.textContent = new Date().toLocaleTimeString();
+
+    el.appendChild(badge);
+    el.appendChild(msg);
+    el.appendChild(time);
+
+    if (log.children.length === 1 && log.children[0].tagName === 'DIV') log.textContent = '';
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    count++;
+    document.getElementById('sse-count')!.textContent = `${count} events`;
+  }
+
+  document.getElementById('sse-connect')!.addEventListener('click', () => {
+    const url = (document.getElementById('sse-url') as HTMLInputElement).value;
+    if (!url) return;
+    source = new EventSource(url);
+    document.getElementById('sse-dot')!.style.background = '#F59E0B';
+    document.getElementById('sse-status')!.textContent = 'Connecting...';
+    document.getElementById('sse-connect')!.classList.add('hidden');
+    document.getElementById('sse-disconnect')!.classList.remove('hidden');
+
+    source.onopen = () => {
+      document.getElementById('sse-dot')!.style.background = '#10B981';
+      document.getElementById('sse-status')!.textContent = 'Connected';
+    };
+    source.onmessage = (e) => addEvent('message', e.data);
+    source.onerror = () => {
+      document.getElementById('sse-dot')!.style.background = '#EF4444';
+      document.getElementById('sse-status')!.textContent = 'Error / Reconnecting';
+    };
+  });
+
+  document.getElementById('sse-disconnect')!.addEventListener('click', () => {
+    source?.close();
+    source = null;
+    document.getElementById('sse-dot')!.style.background = 'rgba(255,255,255,0.2)';
+    document.getElementById('sse-status')!.textContent = 'Disconnected';
+    document.getElementById('sse-connect')!.classList.remove('hidden');
+    document.getElementById('sse-disconnect')!.classList.add('hidden');
+  });
+</script>

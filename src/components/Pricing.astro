@@ -1,0 +1,115 @@
+---
+const plans = [
+  {
+    name: 'Free',
+    price: '$0',
+    period: 'forever',
+    description: 'Perfect for getting started',
+    features: [
+      '50 requests / day',
+      '3 collections',
+      'Basic tools',
+      'Local storage only',
+      'Community support',
+    ],
+    cta: 'Get Started',
+    highlighted: false,
+  },
+  {
+    name: 'Pro',
+    price: '$9.99',
+    period: '/month',
+    annual: '$95.99/year',
+    description: 'For serious developers',
+    features: [
+      'Unlimited requests',
+      'Unlimited collections',
+      '78+ developer tools',
+      'Pre & post scripts',
+      'Cloud sync (E2E encrypted)',
+      'AI-powered analysis',
+      'Priority support',
+    ],
+    cta: 'Start Free Trial',
+    highlighted: true,
+  },
+  {
+    name: 'Team',
+    price: '$19.99',
+    period: '/month',
+    annual: '$191.99/year',
+    description: 'Collaborate with your team',
+    features: [
+      'Everything in Pro',
+      'Team workspaces',
+      'Shared collections',
+      'Git sync integration',
+      'Admin controls',
+      'SSO (coming soon)',
+      'Dedicated support',
+    ],
+    cta: 'Contact Sales',
+    highlighted: false,
+  },
+];
+---
+
+<section id="pricing" class="py-[100px] sm:py-[120px] px-6">
+  <div class="max-w-container mx-auto">
+    <!-- Section header — Linear left-aligned style -->
+    <div class="observe mb-14 border-b border-[#1E1E21] pb-6">
+      <h2 class="text-[24px] sm:text-[28px] font-medium tracking-[-0.03em] text-[#F5F5F5]">
+        Pricing
+      </h2>
+    </div>
+
+    <!-- Pricing grid -->
+    <div class="stagger-children grid grid-cols-1 md:grid-cols-3 gap-px bg-[#1E1E21] rounded-2xl overflow-hidden border border-[#1E1E21]">
+      {plans.map((plan) => (
+        <div class={`p-7 sm:p-8 ${plan.highlighted ? 'bg-[#111113]' : 'bg-[#0A0A0B]'}`}>
+          <div class="mb-6">
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="text-[15px] font-medium text-[#F5F5F5]">{plan.name}</h3>
+              {plan.highlighted && (
+                <span class="px-2 py-0.5 text-[10px] font-medium bg-accent/10 text-accent rounded-full">Popular</span>
+              )}
+            </div>
+            <p class="text-[13px] text-[#5C5C5C]">{plan.description}</p>
+          </div>
+
+          <div class="mb-6">
+            <div class="flex items-baseline gap-1">
+              <span class="text-[32px] font-medium tracking-[-0.04em] text-[#F5F5F5]">{plan.price}</span>
+              <span class="text-[#5C5C5C] text-sm">{plan.period}</span>
+            </div>
+            {plan.annual && (
+              <p class="text-[12px] text-[#3A3A3E] mt-1">{plan.annual} billed annually</p>
+            )}
+          </div>
+
+          <a
+            href="#"
+            class={`block w-full text-center py-2.5 px-4 text-[13px] font-medium rounded-lg mb-6 transition-opacity duration-200 hover:opacity-90 active:scale-[0.98] ${
+              plan.highlighted
+                ? 'bg-[#F5F5F5] text-[#0A0A0B]'
+                : 'border border-[#2A2A2E] text-[#F5F5F5] hover:border-[#3A3A3E]'
+            }`}
+          >
+            {plan.cta}
+          </a>
+
+          <ul class="space-y-2.5">
+            {plan.features.map((feature) => (
+              <li class="flex items-start gap-2.5 text-[13px] text-[#6B6B6B]">
+                <svg class="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-[#3A3A3E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

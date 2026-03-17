@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+
+const posts = [
+  {
+    title: 'Introducing AI-Powered Response Analysis',
+    excerpt: 'Let AI help you understand complex API responses, detect anomalies, and suggest improvements.',
+    date: 'March 10, 2026',
+    tag: 'Product',
+  },
+  {
+    title: 'How We Built E2E Encryption for Cloud Sync',
+    excerpt: 'A deep dive into the zero-knowledge architecture behind Fetchlab\'s encrypted cloud sync.',
+    date: 'February 20, 2026',
+    tag: 'Engineering',
+  },
+  {
+    title: 'WebSocket Testing on iOS: A Complete Guide',
+    excerpt: 'Everything you need to know about testing WebSocket connections with Fetchlab.',
+    date: 'February 5, 2026',
+    tag: 'Tutorial',
+  },
+  {
+    title: 'GraphQL on Mobile: Why We Built a Native Explorer',
+    excerpt: 'Desktop GraphQL tools are powerful but desktop-only. Here\'s how we brought the experience to iOS.',
+    date: 'January 15, 2026',
+    tag: 'Product',
+  },
+  {
+    title: 'Migrating from Postman: A Step-by-Step Guide',
+    excerpt: 'Import your collections, environments, and scripts from Postman to Fetchlab in minutes.',
+    date: 'December 12, 2025',
+    tag: 'Tutorial',
+  },
+  {
+    title: 'Why API Testing Belongs on Mobile',
+    excerpt: 'The case for mobile-first API development tools in an always-connected world.',
+    date: 'November 5, 2025',
+    tag: 'Thoughts',
+  },
+];
+
+const tagColors: Record<string, string> = {
+  Product: 'bg-accent/10 text-accent',
+  Engineering: 'bg-blue-500/10 text-blue-400',
+  Tutorial: 'bg-green-500/10 text-green-400',
+  Thoughts: 'bg-purple-500/10 text-purple-400',
+};
+---
+
+<Base title="Blog — Fetchlab" description="Product updates, engineering deep dives, and tutorials from the Fetchlab team.">
+  <div class="pt-28 pb-20 px-6">
+    <div class="max-w-[780px] mx-auto">
+      <h1 class="text-[32px] sm:text-[40px] font-medium tracking-[-0.04em] text-[#F5F5F5] mb-3">Blog</h1>
+      <p class="text-[15px] text-[#5C5C5C] mb-14">Product updates, engineering stories, and tutorials.</p>
+
+      <div class="space-y-0">
+        {posts.map((post) => (
+          <a href="#" class="block py-6 border-b border-[#1E1E21] group hover:bg-[#111113] -mx-4 px-4 rounded-lg transition-colors">
+            <div class="flex items-center gap-3 mb-2">
+              <span class={`px-2 py-0.5 text-[10px] font-medium rounded ${tagColors[post.tag]}`}>{post.tag}</span>
+              <span class="text-[12px] text-[#3A3A3E]">{post.date}</span>
+            </div>
+            <h2 class="text-[16px] font-medium text-[#F5F5F5] mb-1.5 group-hover:text-white transition-colors">{post.title}</h2>
+            <p class="text-[13px] text-[#5C5C5C] leading-relaxed">{post.excerpt}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

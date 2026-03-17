@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="About — Fetchlab" description="The story behind Fetchlab. Building the best API testing experience for mobile developers.">
+  <div class="pt-28 pb-20 px-6">
+    <div class="max-w-[680px] mx-auto">
+      <h1 class="text-[32px] sm:text-[40px] font-medium tracking-[-0.04em] text-[#F5F5F5] mb-6">About Fetchlab</h1>
+
+      <div class="space-y-6 text-[15px] text-[#8B8B8B] leading-[1.75]">
+        <p>
+          Fetchlab was born from a simple frustration: every serious API tool was built for desktops. As developers, we found ourselves needing to debug production issues, test endpoints, and monitor APIs — often from a phone during an on-call shift or while commuting.
+        </p>
+        <p>
+          We set out to build the tool we wished existed: a professional-grade API client that doesn't compromise on features just because it runs on iOS. Full scripting support, encrypted sync, 78+ developer tools — all designed for touch-first interaction.
+        </p>
+        <p>
+          Security is foundational, not an afterthought. Every piece of data that leaves your device is end-to-end encrypted. We use zero-knowledge architecture because your API keys, tokens, and request data should be yours alone.
+        </p>
+        <p>
+          We're a small, independent team focused on building the most capable and secure API client on iOS. No venture-backed growth hacks — just a great product for developers who need it.
+        </p>
+      </div>
+
+      <!-- Values -->
+      <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-px bg-[#1E1E21] rounded-xl overflow-hidden border border-[#1E1E21]">
+        {[
+          { title: 'Security first', desc: 'E2E encryption and zero-knowledge architecture by default.' },
+          { title: 'Mobile native', desc: 'Built for iOS, not ported from desktop. Touch-first design.' },
+          { title: 'Developer focused', desc: 'Every feature exists because developers asked for it.' },
+          { title: 'Independent', desc: 'Self-funded. No ads, no tracking, no compromises.' },
+        ].map((v) => (
+          <div class="bg-[#0A0A0B] p-7">
+            <h3 class="text-[14px] font-medium text-[#F5F5F5] mb-2">{v.title}</h3>
+            <p class="text-[13px] text-[#5C5C5C] leading-relaxed">{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,59 @@
+---
+const logos = [
+  'Vercel', 'Supabase', 'Railway', 'Planetscale', 'Resend',
+  'Neon', 'Stripe', 'Cloudflare', 'GitHub', 'Linear',
+  'Figma', 'Notion', 'Slack', 'Datadog', 'MongoDB'
+];
+---
+
+<section class="py-16 px-6 overflow-hidden">
+  <div class="max-w-container mx-auto">
+    <!-- Label + link — Linear style -->
+    <div class="observe flex items-center justify-between mb-10">
+      <p class="text-[13px] text-[#5C5C5C] font-medium">
+        Powering the world's best developer teams
+      </p>
+      <a href="#" class="hidden sm:inline-flex items-center gap-1.5 text-[13px] text-[#5C5C5C] hover:text-[#8B8B8B] transition-colors font-medium">
+        Meet our customers
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Marquee -->
+  <div class="relative">
+    <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#0A0A0B] to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#0A0A0B] to-transparent z-10 pointer-events-none"></div>
+
+    <div class="marquee-track">
+      <div class="marquee-content">
+        {logos.map((name) => (
+          <span class="text-[#3A3A3E] text-[15px] font-medium tracking-tight whitespace-nowrap px-10">{name}</span>
+        ))}
+      </div>
+      <div class="marquee-content" aria-hidden="true">
+        {logos.map((name) => (
+          <span class="text-[#3A3A3E] text-[15px] font-medium tracking-tight whitespace-nowrap px-10">{name}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-track {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+  }
+  .marquee-content {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    animation: marquee 35s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+</style>

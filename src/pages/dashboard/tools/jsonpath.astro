@@ -1,0 +1,47 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+
+<ToolPage title="JSON Path Evaluator" description="Test JSONPath expressions against your API responses" color="#F59E0B">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="db-card">
+      <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">JSON Data</label>
+      <textarea id="jp-json" rows="14" class="w-full p-3 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/60 resize-none leading-[1.7] outline-none focus:border-white/[0.12]" placeholder='{"users": [{"id": 1, "name": "John"}, {"id": 2, "name": "Jane"}]}'></textarea>
+    </div>
+    <div class="space-y-4">
+      <div class="db-card">
+        <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">JSONPath Expression</label>
+        <div class="flex gap-2">
+          <input type="text" id="jp-path" placeholder="$.users[0].name" class="flex-1 p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[13px] text-amber-300 outline-none focus:border-white/[0.12]" />
+          <button id="jp-eval" class="px-4 py-2 bg-amber-500 text-white text-[12px] font-semibold rounded-lg hover:bg-amber-600 transition-colors border-none cursor-pointer">Evaluate</button>
+        </div>
+      </div>
+      <div class="db-card">
+        <div class="db-card-header">Result</div>
+        <pre id="jp-result" class="bg-[#09090B] border border-white/[0.06] rounded-lg p-4 font-mono text-[12px] text-emerald-300/70 min-h-[120px] overflow-auto leading-[1.7]">Enter a JSONPath expression and click Evaluate</pre>
+      </div>
+    </div>
+  </div>
+</ToolPage>
+
+<script>
+  document.getElementById('jp-eval')!.addEventListener('click', () => {
+    const jsonStr = (document.getElementById('jp-json') as HTMLTextAreaElement).value;
+    const path = (document.getElementById('jp-path') as HTMLInputElement).value;
+    const result = document.getElementById('jp-result')!;
+    try {
+      const data = JSON.parse(jsonStr);
+      // Simple JSONPath evaluator for common patterns
+      const parts = path.replace(/^\$\.?/, '').split(/\.|\[|\]/).filter(Boolean);
+      let current: any = data;
+      for (const part of parts) {
+        if (current === undefined) break;
+        const idx = parseInt(part);
+        current = isNaN(idx) ? current[part] : current[idx];
+      }
+      result.textContent = JSON.stringify(current, null, 2) ?? 'undefined';
+    } catch (e: any) {
+      result.textContent = `Error: ${e.message}`;
+    }
+  });
+</script>

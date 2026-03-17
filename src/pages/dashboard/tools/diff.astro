@@ -1,0 +1,28 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="Response Diff" description="Compare two API responses side by side" color="#F97316">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+    <div class="db-card"><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Response A</label><textarea id="diff-a" rows="14" class="w-full p-3 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/60 resize-none leading-[1.7] outline-none" placeholder='{"id": 1, "name": "John"}'></textarea></div>
+    <div class="db-card"><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Response B</label><textarea id="diff-b" rows="14" class="w-full p-3 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/60 resize-none leading-[1.7] outline-none" placeholder='{"id": 1, "name": "Jane", "role": "admin"}'></textarea></div>
+  </div>
+  <button id="diff-compare" class="px-5 py-2.5 bg-orange-500 text-white text-[13px] font-semibold rounded-lg hover:bg-orange-600 transition-colors border-none cursor-pointer mb-4">Compare</button>
+  <div class="db-card hidden" id="diff-result"><div class="db-card-header">Differences</div><pre id="diff-output" class="bg-[#09090B] border border-white/[0.06] rounded-lg p-4 font-mono text-[12px] text-white/60 overflow-auto max-h-[400px] leading-[1.7]"></pre></div>
+</ToolPage>
+<script>
+  document.getElementById('diff-compare')!.addEventListener('click', () => {
+    try {
+      const a = JSON.parse((document.getElementById('diff-a') as HTMLTextAreaElement).value);
+      const b = JSON.parse((document.getElementById('diff-b') as HTMLTextAreaElement).value);
+      const diffs: string[] = [];
+      const allKeys = new Set([...Object.keys(a), ...Object.keys(b)]);
+      allKeys.forEach(k => {
+        if (!(k in a)) diffs.push(`+ "${k}": ${JSON.stringify(b[k])} (added)`);
+        else if (!(k in b)) diffs.push(`- "${k}": ${JSON.stringify(a[k])} (removed)`);
+        else if (JSON.stringify(a[k]) !== JSON.stringify(b[k])) diffs.push(`~ "${k}": ${JSON.stringify(a[k])} → ${JSON.stringify(b[k])}`);
+      });
+      (document.getElementById('diff-output') as HTMLElement).textContent = diffs.length ? diffs.join('\n') : 'No differences found.';
+      document.getElementById('diff-result')!.classList.remove('hidden');
+    } catch (e: any) { alert('Invalid JSON: ' + e.message); }
+  });
+</script>

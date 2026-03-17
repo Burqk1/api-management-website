@@ -1,0 +1,114 @@
+---
+import Dashboard from '../../layouts/Dashboard.astro';
+---
+
+<Dashboard title="History" activeTab="history">
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-[22px] font-semibold tracking-[-0.03em] text-white/90" data-i18n="hist.title">Request History</h1>
+      <p class="text-[13px] text-white/30 mt-1" data-i18n="hist.subtitle">All your past API requests</p>
+    </div>
+    <button class="px-4 py-2 text-[13px] font-medium text-white/30 rounded-lg border border-white/[0.06] hover:border-red-500/30 hover:text-red-400 transition-all bg-transparent cursor-pointer" id="clear-btn" data-i18n="hist.clear">
+      Clear History
+    </button>
+  </div>
+
+  <div id="history-content">
+    <!-- Empty state -->
+    <div class="db-card" id="empty-history">
+      <div class="flex flex-col items-center justify-center py-14 text-center">
+        <div class="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-white/15"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <p class="text-[15px] font-semibold text-white/70 mb-1" data-i18n="hist.empty">No history yet</p>
+        <p class="text-[13px] text-white/25 max-w-[300px]" data-i18n="hist.emptyDesc">Your API request history will appear here after you start sending requests.</p>
+      </div>
+    </div>
+
+    <!-- History list -->
+    <div class="db-card !p-0 hidden" id="history-list"></div>
+  </div>
+</Dashboard>
+
+<script>
+  import * as store from '../../lib/syncStore';
+
+  const METHOD_COLORS: Record<string, string> = {
+    GET: '#10B981', POST: '#3B82F6', PUT: '#F59E0B',
+    PATCH: '#8B5CF6', DELETE: '#EF4444', HEAD: '#6B7280', OPTIONS: '#EC4899',
+  };
+
+  function render() {
+    const logs = store.getCallLogs();
+    const emptyEl = document.getElementById('empty-history')!;
+    const listEl = document.getElementById('history-list')!;
+
+    if (logs.length === 0) {
+      emptyEl.classList.remove('hidden');
+      listEl.classList.add('hidden');
+      return;
+    }
+
+    emptyEl.classList.add('hidden');
+    listEl.classList.remove('hidden');
+    listEl.textContent = '';
+
+    logs.forEach((log, i) => {
+      const color = METHOD_COLORS[log.method] || '#6B7280';
+      const row = document.createElement('div');
+      row.className = `flex items-center gap-3 px-5 py-3.5 ${i < logs.length - 1 ? 'border-b border-white/[0.04]' : ''} hover:bg-white/[0.02] transition-colors cursor-pointer`;
+
+      const badge = document.createElement('span');
+      badge.className = 'text-[10px] font-bold px-2.5 py-1 rounded-md min-w-[48px] text-center shrink-0';
+      badge.style.background = color + '12';
+      badge.style.color = color;
+      badge.textContent = log.method;
+
+      const info = document.createElement('div');
+      info.className = 'flex-1 min-w-0';
+      const name = document.createElement('div');
+      name.className = 'text-[13px] font-medium text-white/80 truncate';
+      name.textContent = log.endpointName || log.url;
+      const meta = document.createElement('div');
+      meta.className = 'text-[11px] text-white/20 mt-0.5 font-mono';
+      meta.textContent = log.url;
+      info.appendChild(name);
+      info.appendChild(meta);
+
+      const stats = document.createElement('div');
+      stats.className = 'flex items-center gap-3 text-[11px] text-white/30 shrink-0';
+
+      const statusSpan = document.createElement('span');
+      statusSpan.className = 'font-mono font-medium';
+      statusSpan.style.color = log.success ? '#10B981' : '#EF4444';
+      statusSpan.textContent = String(log.statusCode);
+
+      const timeSpan = document.createElement('span');
+      timeSpan.textContent = `${log.responseTime}ms`;
+
+      const dateSpan = document.createElement('span');
+      dateSpan.textContent = new Date(log.timestamp).toLocaleTimeString();
+
+      stats.appendChild(statusSpan);
+      stats.appendChild(timeSpan);
+      stats.appendChild(dateSpan);
+
+      row.appendChild(badge);
+      row.appendChild(info);
+      row.appendChild(stats);
+      listEl.appendChild(row);
+    });
+  }
+
+  store.loadLocal();
+  render();
+  window.addEventListener('fetchlab:synced', render);
+
+  import { t } from '../../lib/i18n';
+  document.getElementById('clear-btn')?.addEventListener('click', () => {
+    if (confirm(t('hist.clearConfirm'))) {
+      store.clearCallLogs();
+      render();
+    }
+  });
+</script>

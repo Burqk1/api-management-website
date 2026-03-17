@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Privacy Policy — Fetchlab" description="Fetchlab privacy policy. Learn how we collect, use, and protect your data.">
+  <div class="pt-28 pb-20 px-6">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2">Privacy Policy</h1>
+      <p class="text-base-500 text-sm mb-12">Last updated: January 15, 2025</p>
+
+      <div class="prose-custom space-y-10 text-base-400 text-[15px] leading-relaxed">
+        <section>
+          <h2 class="text-xl font-semibold text-base-50 mb-4">1. Introduction</h2>
+          <p>Fetchlab ("we", "our", "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use the Fetchlab iOS application and related services.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-base-50 mb-4">2. Information We Collect</h2>
+          <h3 class="text-base font-medium text-base-300 mb-2 mt-6">Account Information</h3>
+          <p>When you create an account, we collect your email address and display name. We use this information to provide and manage your account.</p>
+
+          <h3 class="text-base font-medium text-base-300 mb-2 mt-6">Usage Analytics</h3>
+          <p>We collect anonymized usage data to improve the app experience. This includes feature usage patterns, crash reports, and performance metrics. We do not track individual API requests or response content.</p>
+
+          <h3 class="text-base font-medium text-base-300 mb-2 mt-6">API Data</h3>
+          <p>Your API requests, responses, collections, and environments are stored locally on your device by default. If you enable Cloud Sync (Pro/Team plans), this data is end-to-end encrypted before being transmitted to our servers.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-base-50 mb-4">3. Third-Party Services</h2>
+          <ul class="list-disc list-inside space-y-2 ml-2">
+            <li><strong class="text-base-300">Supabase</strong> — Authentication and cloud data storage. Data is encrypted at rest.</li>
+            <li><strong class="text-base-300">RevenueCat</strong> — Subscription management and billing. We share anonymized purchase data only.</li>
+            <li><strong class="text-base-300">TelemetryDeck</strong> — Privacy-first analytics. No personal data is collected.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-base-50 mb-4">4. Data Encryption & Storage</h2>
+          <p>All cloud-synced data is encrypted using AES-256-GCM encryption before leaving your device. Encryption keys are derived from your account credentials and never transmitted to our servers. We cannot read your API data.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-base-50 mb-4">5. Your Rights</h2>
+          <p>You have the right to:</p>
+          <ul class="list-disc list-inside space-y-2 ml-2 mt-2">
+            <li>Access your personal data</li>
+            <li>Export your collections and data</li>
+            <li>Request deletion of your account and all associated data</li>
+            <li>Opt out of analytics collection</li>
+          </ul>
+          <p class="mt-4">To exercise any of these rights, contact us at <a href="mailto:privacy@fetchlab.dev" class="text-accent hover:underline">privacy@fetchlab.dev</a>.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-base-50 mb-4">6. Data Retention</h2>
+          <p>We retain your account data for as long as your account is active. When you delete your account, all associated data is permanently deleted within 30 days.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-base-50 mb-4">7. Children's Privacy</h2>
+          <p>Fetchlab is not directed at children under 13. We do not knowingly collect personal information from children.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-base-50 mb-4">8. Changes to This Policy</h2>
+          <p>We may update this Privacy Policy from time to time. We will notify you of any material changes via the app or email.</p>
+        </section>
+
+        <section>
+          <h2 class="text-xl font-semibold text-base-50 mb-4">9. Contact</h2>
+          <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+          <p class="mt-2"><a href="mailto:privacy@fetchlab.dev" class="text-accent hover:underline">privacy@fetchlab.dev</a></p>
+        </section>
+      </div>
+    </div>
+  </div>
+</Base>

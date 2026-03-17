@@ -1,0 +1,14 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="Proxy Settings" description="Configure HTTP/SOCKS proxy for API requests" color="#8B5CF6">
+  <div class="db-card">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Proxy Host</label><input type="text" placeholder="proxy.example.com" class="w-full p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[13px] text-white/60 outline-none" /></div>
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Port</label><input type="number" placeholder="8080" class="w-full p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg text-[13px] text-white/60 outline-none" /></div>
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Username (optional)</label><input type="text" placeholder="user" class="w-full p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg text-[13px] text-white/60 outline-none" /></div>
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Password (optional)</label><input type="password" placeholder="••••••" class="w-full p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg text-[13px] text-white/60 outline-none" /></div>
+    </div>
+    <div class="flex gap-2"><button class="px-5 py-2.5 bg-violet-500 text-white text-[13px] font-semibold rounded-lg hover:bg-violet-600 transition-colors border-none cursor-pointer">Save Proxy</button><button class="px-4 py-2.5 bg-white/[0.04] text-white/40 text-[13px] rounded-lg border border-white/[0.06] cursor-pointer hover:bg-white/[0.08] transition-colors">Test Connection</button></div>
+  </div>
+</ToolPage>

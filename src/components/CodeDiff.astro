@@ -1,0 +1,113 @@
+---
+---
+
+<section id="diff" class="py-[100px] sm:py-[120px] px-6">
+  <div class="max-w-container mx-auto">
+    <!-- Section header — Linear style -->
+    <div class="observe max-w-[640px] mb-14">
+      <h2 class="text-[24px] sm:text-[32px] lg:text-[40px] font-medium tracking-[-0.04em] text-[#F5F5F5] mb-4 leading-[1.1]">
+        Think diff
+      </h2>
+      <p class="text-[15px] text-[#5C5C5C] leading-relaxed">
+        Smart response diffing that catches breaking changes before your users do.
+      </p>
+    </div>
+
+    <!-- Code Diff Panel -->
+    <div class="observe-scale max-w-[960px]" style="animation-delay: 150ms">
+      <div class="code-diff-panel">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+          <!-- Left - Before -->
+          <div class="md:border-r border-[#1d1d20]">
+            <div class="code-diff-header">
+              <span class="text-[11px] text-[#6B6B6B] font-mono uppercase tracking-wider">Before</span>
+              <span class="text-[10px] text-[#3A3A3E] font-mono">response_v1.json</span>
+            </div>
+            <div class="code-block">
+              <div class="code-line code-line-comment"><span class="ln">1</span><span class="code-comment">/**</span></div>
+              <div class="code-line code-line-comment"><span class="ln">2</span><span class="code-comment">&nbsp;* Legacy API testing workflow</span></div>
+              <div class="code-line code-line-comment"><span class="ln">3</span><span class="code-comment">&nbsp;* built for desktop-only tools.</span></div>
+              <div class="code-line code-line-comment"><span class="ln">4</span><span class="code-comment">&nbsp;*/</span></div>
+              <div class="code-line code-line-removed"><span class="ln ln-red">5</span><span><span class="code-keyword">export</span> <span class="code-keyword">const</span> <span class="code-fn">APIWorkflow</span> = () =&gt; {'{'}</span></div>
+              <div class="code-line code-line-removed"><span class="ln ln-red">6</span><span>&nbsp;&nbsp;&lt;<span class="code-component">Desktop</span>.<span class="code-fn">Provider</span>&gt;</span></div>
+              <div class="code-line code-line-removed"><span class="ln ln-red">7</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="code-component">ManualTesting</span> /&gt;</span></div>
+              <div class="code-line code-line-removed"><span class="ln ln-red">8</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="code-component">NoScripts</span> /&gt;</span></div>
+              <div class="code-line code-line-removed"><span class="ln ln-red">9</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="code-component">Unencrypted</span> /&gt;</span></div>
+              <div class="code-line code-line-removed"><span class="ln ln-red">10</span><span>&nbsp;&nbsp;&lt;/<span class="code-component">Desktop</span>.<span class="code-fn">Provider</span>&gt;</span></div>
+              <div class="code-line code-line-removed"><span class="ln ln-red">11</span><span>{'}'}</span></div>
+            </div>
+          </div>
+
+          <!-- Right - After -->
+          <div>
+            <div class="code-diff-header">
+              <span class="text-[11px] text-[#6B6B6B] font-mono uppercase tracking-wider">After</span>
+              <span class="text-[10px] text-[#3A3A3E] font-mono">response_v2.json</span>
+            </div>
+            <div class="code-block">
+              <div class="code-line code-line-comment"><span class="ln">1</span><span class="code-comment">/**</span></div>
+              <div class="code-line code-line-comment"><span class="ln">2</span><span class="code-comment">&nbsp;* Modern API testing, reimagined</span></div>
+              <div class="code-line code-line-comment"><span class="ln">3</span><span class="code-comment">&nbsp;* for mobile-first developers.</span></div>
+              <div class="code-line code-line-comment"><span class="ln">4</span><span class="code-comment">&nbsp;*/</span></div>
+              <div class="code-line code-line-added"><span class="ln ln-green">5</span><span><span class="code-keyword">export</span> <span class="code-keyword">const</span> <span class="code-fn">APIWorkflow</span> = () =&gt; {'{'}</span></div>
+              <div class="code-line code-line-added"><span class="ln ln-green">6</span><span>&nbsp;&nbsp;&lt;<span class="code-component">Fetchlab</span>.<span class="code-fn">Provider</span>&gt;</span></div>
+              <div class="code-line code-line-added"><span class="ln ln-green">7</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="code-component">PrePostScripts</span> /&gt;</span></div>
+              <div class="code-line code-line-added"><span class="ln ln-green">8</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="code-component">E2EEncrypted</span> /&gt;</span></div>
+              <div class="code-line code-line-added"><span class="ln ln-green">9</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="code-component">MobileFirst</span> /&gt;</span></div>
+              <div class="code-line code-line-added"><span class="ln ln-green">10</span><span>&nbsp;&nbsp;&lt;/<span class="code-component">Fetchlab</span>.<span class="code-fn">Provider</span>&gt;</span></div>
+              <div class="code-line code-line-added"><span class="ln ln-green">11</span><span>{'}'}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .code-diff-panel {
+    background: #111113;
+    border: 1px solid #1d1d20;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .code-diff-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid #1d1d20;
+    background: #0c0c0e;
+  }
+  .code-block {
+    padding: 4px 0;
+    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .code-line {
+    display: flex;
+    padding: 0 20px 0 0;
+    min-height: 24px;
+    align-items: center;
+  }
+  .ln {
+    width: 40px;
+    flex-shrink: 0;
+    text-align: right;
+    padding-right: 16px;
+    color: rgba(139, 139, 139, 0.2);
+    font-size: 12px;
+    user-select: none;
+  }
+  .ln-red { color: rgba(248, 113, 113, 0.25); }
+  .ln-green { color: rgba(74, 222, 128, 0.25); }
+  .code-line-comment { color: #8B8FA3; }
+  .code-line-comment span:not(.ln) { font-style: italic; }
+  .code-line-removed { background: rgba(248, 113, 113, 0.05); color: #E2E4E7; }
+  .code-line-added { background: rgba(74, 222, 128, 0.05); color: #E2E4E7; }
+  .code-comment { color: #8B8FA3; font-style: italic; }
+  .code-keyword { color: #F79CE0; }
+  .code-component { color: #89D196; }
+  .code-fn { color: #8FA4FF; }
+</style>

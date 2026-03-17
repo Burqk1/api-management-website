@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Pre & Post Scripts — Fetchlab" description="Postman-compatible scripting engine with sandboxed execution, test assertions, and variable chaining.">
+  <div class="pt-28 pb-20 px-6">
+    <div class="max-w-[780px] mx-auto">
+      <h1 class="text-[32px] sm:text-[40px] font-medium tracking-[-0.04em] text-[#F5F5F5] mb-3">Pre & Post Scripts</h1>
+      <p class="text-[15px] text-[#5C5C5C] mb-14 max-w-[520px]">
+        Automate your API workflows with Postman-compatible scripts. Set variables, chain requests, and write test assertions.
+      </p>
+
+      <div class="space-y-4">
+        <!-- Pre-request example -->
+        <div class="bg-[#111113] border border-[#1E1E21] rounded-xl p-7">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="px-2 py-0.5 text-[10px] font-medium bg-amber-500/10 text-amber-400 rounded">Pre-request</span>
+            <span class="text-[13px] text-[#5C5C5C]">Runs before the request is sent</span>
+          </div>
+          <div class="bg-[#0A0A0B] rounded-lg border border-[#1E1E21] p-4 font-mono text-[12px] text-[#6B6B6B] leading-[1.8]">
+            <div class="text-[#5C5C5C]">// Generate fresh auth token</div>
+            <div><span class="text-[#F79CE0]">const</span> <span class="text-[#8FA4FF]">token</span> = <span class="text-[#89D196]">pm</span>.<span class="text-[#8FA4FF]">environment</span>.<span class="text-[#89D196]">get</span>(<span class="text-[#98C379]">"auth_token"</span>);</div>
+            <div><span class="text-[#89D196]">pm</span>.<span class="text-[#8FA4FF]">request</span>.<span class="text-[#8FA4FF]">headers</span>.<span class="text-[#89D196]">add</span>({"{"}</div>
+            <div class="pl-4"><span class="text-[#8FA4FF]">key</span>: <span class="text-[#98C379]">"Authorization"</span>,</div>
+            <div class="pl-4"><span class="text-[#8FA4FF]">value</span>: <span class="text-[#98C379]">`Bearer ${"{"}token{"}"}`</span></div>
+            <div>{"}"});</div>
+          </div>
+        </div>
+
+        <!-- Post-request example -->
+        <div class="bg-[#111113] border border-[#1E1E21] rounded-xl p-7">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="px-2 py-0.5 text-[10px] font-medium bg-green-500/10 text-green-400 rounded">Post-request</span>
+            <span class="text-[13px] text-[#5C5C5C]">Runs after the response arrives</span>
+          </div>
+          <div class="bg-[#0A0A0B] rounded-lg border border-[#1E1E21] p-4 font-mono text-[12px] text-[#6B6B6B] leading-[1.8]">
+            <div class="text-[#5C5C5C]">// Validate response and chain data</div>
+            <div><span class="text-[#89D196]">pm</span>.<span class="text-[#8FA4FF]">test</span>(<span class="text-[#98C379]">"Status is 200"</span>, () => {"{"}</div>
+            <div class="pl-4"><span class="text-[#89D196]">pm</span>.<span class="text-[#8FA4FF]">response</span>.<span class="text-[#89D196]">to</span>.<span class="text-[#89D196]">have</span>.<span class="text-[#89D196]">status</span>(<span class="text-[#D19A66]">200</span>);</div>
+            <div>{"}"});</div>
+            <div class="mt-1"><span class="text-[#F79CE0]">const</span> <span class="text-[#8FA4FF]">userId</span> = <span class="text-[#89D196]">pm</span>.<span class="text-[#8FA4FF]">response</span>.<span class="text-[#89D196]">json</span>().<span class="text-[#8FA4FF]">data</span>.<span class="text-[#8FA4FF]">id</span>;</div>
+            <div><span class="text-[#89D196]">pm</span>.<span class="text-[#8FA4FF]">environment</span>.<span class="text-[#89D196]">set</span>(<span class="text-[#98C379]">"user_id"</span>, <span class="text-[#8FA4FF]">userId</span>);</div>
+          </div>
+        </div>
+
+        <!-- Features list -->
+        <div class="bg-[#111113] border border-[#1E1E21] rounded-xl p-7">
+          <h3 class="text-[15px] font-medium text-[#F5F5F5] mb-4">Capabilities</h3>
+          <ul class="space-y-2.5">
+            {[
+              'Postman-compatible pm.* API',
+              'Sandboxed JavaScript execution',
+              'Variable chaining across requests',
+              'Test assertions with detailed results',
+              'Syntax highlighting and autocomplete',
+              'Access to environment and global variables',
+            ].map((item) => (
+              <li class="flex items-center gap-2.5 text-[13px] text-[#6B6B6B]">
+                <svg class="w-3.5 h-3.5 text-[#3A3A3E] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

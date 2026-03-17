@@ -1,0 +1,106 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+
+<ToolPage title="Mock Server" description="Create mock API endpoints that return predefined responses" color="#F59E0B">
+  <div class="db-card mb-4">
+    <div class="db-card-header">Create Mock Endpoint</div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+      <div>
+        <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Method</label>
+        <select class="db-input w-full" id="mock-method">
+          <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option>
+        </select>
+      </div>
+      <div class="md:col-span-2">
+        <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Path</label>
+        <input type="text" id="mock-path" placeholder="/api/users" class="db-input w-full font-mono text-[13px]" />
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+      <div>
+        <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Status Code</label>
+        <input type="number" id="mock-status" value="200" class="db-input w-full text-[13px]" />
+      </div>
+      <div>
+        <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Delay (ms)</label>
+        <input type="number" id="mock-delay" value="0" class="db-input w-full text-[13px]" />
+      </div>
+    </div>
+    <div class="mb-4">
+      <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Response Body</label>
+      <textarea id="mock-body" rows="6" class="db-input w-full font-mono text-[12px] resize-none leading-[1.7]" placeholder='{"message": "Hello World", "status": "ok"}'></textarea>
+    </div>
+    <button id="mock-add" class="px-5 py-2.5 bg-amber-500 text-white text-[13px] font-semibold rounded-lg hover:bg-amber-600 transition-colors border-none cursor-pointer">
+      Add Mock Endpoint
+    </button>
+  </div>
+
+  <div class="db-card">
+    <div class="db-card-header">Active Mocks</div>
+    <div id="mock-list" class="text-white/15 text-center py-6 text-[13px]">
+      No mock endpoints configured yet.
+    </div>
+  </div>
+</ToolPage>
+
+<style>
+  .db-input { padding:9px 12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; color:#FAFAFA; font-size:13px; outline:none; }
+  .db-input:focus { border-color:rgba(255,255,255,0.15); }
+  .db-input::placeholder { color:rgba(255,255,255,0.15); }
+</style>
+
+<script>
+  const mocks: { method: string; path: string; status: number; delay: number; body: string }[] = [];
+
+  function renderMocks() {
+    const list = document.getElementById('mock-list')!;
+    if (mocks.length === 0) {
+      list.textContent = 'No mock endpoints configured yet.';
+      list.className = 'text-white/15 text-center py-6 text-[13px]';
+      return;
+    }
+    list.className = 'space-y-2';
+    list.textContent = '';
+    mocks.forEach((m, i) => {
+      const row = document.createElement('div');
+      row.className = 'flex items-center gap-3 px-3 py-3 rounded-lg bg-white/[0.02] border border-white/[0.04]';
+
+      const badge = document.createElement('span');
+      badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 font-mono';
+      badge.textContent = m.method;
+
+      const path = document.createElement('span');
+      path.className = 'text-[13px] text-white/70 font-mono flex-1';
+      path.textContent = m.path;
+
+      const status = document.createElement('span');
+      status.className = 'text-[11px] text-white/30';
+      status.textContent = `${m.status} · ${m.delay}ms`;
+
+      const del = document.createElement('button');
+      del.className = 'text-white/15 hover:text-red-400 transition-colors cursor-pointer text-[14px]';
+      del.textContent = '×';
+      del.addEventListener('click', () => { mocks.splice(i, 1); renderMocks(); });
+
+      row.appendChild(badge);
+      row.appendChild(path);
+      row.appendChild(status);
+      row.appendChild(del);
+      list.appendChild(row);
+    });
+  }
+
+  document.getElementById('mock-add')!.addEventListener('click', () => {
+    const method = (document.getElementById('mock-method') as HTMLSelectElement).value;
+    const path = (document.getElementById('mock-path') as HTMLInputElement).value;
+    const status = parseInt((document.getElementById('mock-status') as HTMLInputElement).value) || 200;
+    const delay = parseInt((document.getElementById('mock-delay') as HTMLInputElement).value) || 0;
+    const body = (document.getElementById('mock-body') as HTMLTextAreaElement).value;
+    if (!path) return;
+    mocks.push({ method, path, status, delay, body });
+    renderMocks();
+    (document.getElementById('mock-path') as HTMLInputElement).value = '';
+    (document.getElementById('mock-body') as HTMLTextAreaElement).value = '';
+  });
+</script>

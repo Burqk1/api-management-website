@@ -1,0 +1,61 @@
+---
+import Dashboard from '../../layouts/Dashboard.astro';
+---
+
+<Dashboard title="Monitor" activeTab="monitor">
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-[22px] font-semibold tracking-[-0.03em] text-white/90" data-i18n="mon.title">Monitor</h1>
+      <p class="text-[13px] text-white/30 mt-1" data-i18n="mon.subtitle">Health checks and uptime monitoring</p>
+    </div>
+    <button class="px-4 py-2 bg-white text-[#09090B] text-[13px] font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2 border-none cursor-pointer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      <span data-i18n="mon.checkAll">Check All</span>
+    </button>
+  </div>
+
+  <!-- Summary cards -->
+  <div class="grid grid-cols-3 gap-3 mb-6">
+    <div class="db-card text-center">
+      <div class="text-[24px] font-bold text-emerald-400">0</div>
+      <div class="text-[11px] text-white/25 mt-1 uppercase tracking-wider font-medium" data-i18n="mon.healthy">Healthy</div>
+    </div>
+    <div class="db-card text-center">
+      <div class="text-[24px] font-bold text-red-400">0</div>
+      <div class="text-[11px] text-white/25 mt-1 uppercase tracking-wider font-medium" data-i18n="mon.down">Down</div>
+    </div>
+    <div class="db-card text-center">
+      <div class="text-[24px] font-bold text-white/30">0</div>
+      <div class="text-[11px] text-white/25 mt-1 uppercase tracking-wider font-medium" data-i18n="mon.pending">Pending</div>
+    </div>
+  </div>
+
+  <!-- Auto check -->
+  <div class="db-card mb-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="text-[14px] font-medium text-white/80" data-i18n="mon.autoCheck">Auto Health Check</div>
+          <div class="text-[11px] text-white/25" data-i18n="mon.autoDesc">Periodically ping your endpoints</div>
+        </div>
+      </div>
+      <button class="w-10 h-[22px] rounded-full bg-white/[0.08] p-[2px] cursor-pointer transition-colors hover:bg-white/[0.12]" id="auto-toggle">
+        <div class="w-[18px] h-[18px] rounded-full bg-white/40 transition-transform"></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="db-card">
+    <div class="flex flex-col items-center justify-center py-14 text-center">
+      <div class="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-white/15"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      </div>
+      <p class="text-[15px] font-semibold text-white/70 mb-1" data-i18n="mon.noChecks">No health checks</p>
+      <p class="text-[13px] text-white/25 max-w-[300px]" data-i18n="mon.addEndpoints">Add endpoints to monitor their uptime and response times automatically.</p>
+    </div>
+  </div>
+</Dashboard>

@@ -1,0 +1,17 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="Assertion Builder" description="Build test assertions visually for your API responses" color="#10B981">
+  <div class="db-card mb-4">
+    <div class="db-card-header">Assertions</div>
+    <div class="space-y-2 mb-4" id="assert-list">
+      <div class="flex items-center gap-2 p-3 rounded-lg bg-white/[0.02] border border-white/[0.04]">
+        <select class="p-2 bg-[#09090B] border border-white/[0.06] rounded-lg text-[12px] text-white/60 outline-none"><option>Status Code</option><option>Body Contains</option><option>Header Exists</option><option>Response Time</option><option>JSON Path</option></select>
+        <select class="p-2 bg-[#09090B] border border-white/[0.06] rounded-lg text-[12px] text-white/60 outline-none"><option>equals</option><option>not equals</option><option>contains</option><option>less than</option></select>
+        <input type="text" placeholder="200" class="flex-1 p-2 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/60 outline-none" />
+        <button class="text-white/15 hover:text-red-400 transition-colors text-[14px] cursor-pointer bg-transparent border-none">&#215;</button>
+      </div>
+    </div>
+    <button class="text-[11px] text-emerald-400 hover:text-emerald-300 font-medium transition-colors cursor-pointer bg-transparent border-none">+ Add Assertion</button>
+  </div>
+</ToolPage>

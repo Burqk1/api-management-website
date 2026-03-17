@@ -1,0 +1,16 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="gRPC Client" description="Test gRPC services with proto file support" color="#06B6D4">
+  <div class="db-card mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Server Address</label><input type="text" placeholder="localhost:50051" class="db-input w-full font-mono text-[13px]" /></div>
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Service / Method</label><input type="text" placeholder="UserService/GetUser" class="db-input w-full font-mono text-[13px]" /></div>
+    </div>
+    <div class="mb-4"><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Proto Definition</label><textarea rows="6" class="db-input w-full font-mono text-[12px] resize-none leading-[1.7]" placeholder="syntax = &quot;proto3&quot;;&#10;&#10;service UserService {&#10;  rpc GetUser (UserRequest) returns (UserResponse);&#10;}"></textarea></div>
+    <div class="mb-4"><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Request Payload (JSON)</label><textarea rows="4" class="db-input w-full font-mono text-[12px] resize-none leading-[1.7]" placeholder='{"id": 1}'></textarea></div>
+    <button class="px-5 py-2.5 bg-cyan-500 text-white text-[13px] font-semibold rounded-lg hover:bg-cyan-600 transition-colors border-none cursor-pointer">Invoke Method</button>
+  </div>
+  <div class="db-card"><div class="db-card-header">Response</div><pre class="bg-[#09090B] border border-white/[0.06] rounded-lg p-4 font-mono text-[12px] text-white/40 min-h-[100px]">Invoke a gRPC method to see the response here.</pre></div>
+</ToolPage>
+<style>.db-input{padding:9px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:#FAFAFA;font-size:13px;outline:none}.db-input:focus{border-color:rgba(255,255,255,0.15)}.db-input::placeholder{color:rgba(255,255,255,0.15)}</style>

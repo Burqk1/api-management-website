@@ -1,0 +1,16 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="API Docs Generator" description="Auto-generate documentation from your API collections" color="#10B981">
+  <div class="db-card mb-4">
+    <div class="db-card-header">Generate Documentation</div>
+    <p class="text-[13px] text-white/30 mb-4">Select a collection to automatically generate API documentation in OpenAPI or Markdown format.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Collection</label><select class="db-input w-full"><option>Select a collection...</option></select></div>
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Format</label><select class="db-input w-full"><option>OpenAPI 3.0 (JSON)</option><option>Markdown</option><option>HTML</option></select></div>
+    </div>
+    <button class="px-5 py-2.5 bg-emerald-500 text-white text-[13px] font-semibold rounded-lg hover:bg-emerald-600 transition-colors border-none cursor-pointer">Generate Docs</button>
+  </div>
+  <div class="db-card"><div class="db-card-header">Preview</div><div class="text-white/15 text-center py-8 text-[13px]">Select a collection and generate documentation to see a preview.</div></div>
+</ToolPage>
+<style>.db-input{padding:9px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:#FAFAFA;font-size:13px;outline:none}.db-input:focus{border-color:rgba(255,255,255,0.15)}</style>

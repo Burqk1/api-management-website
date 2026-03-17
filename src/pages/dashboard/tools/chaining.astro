@@ -1,0 +1,66 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+
+<ToolPage title="Request Chaining" description="Chain multiple API requests together, passing data between them" color="#8B5CF6">
+  <div class="db-card mb-4">
+    <div class="db-card-header">Chain Steps</div>
+    <div id="chain-steps" class="space-y-3 mb-4">
+      <div class="chain-step flex items-center gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.04]">
+        <span class="text-[11px] font-bold text-violet-400 bg-violet-500/15 px-2 py-0.5 rounded">1</span>
+        <select class="db-input-sm"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>
+        <input type="text" placeholder="https://api.example.com/auth" class="db-input flex-1 font-mono text-[12px]" />
+        <button class="text-white/15 hover:text-red-400 transition-colors text-[14px]">×</button>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <button id="chain-add" class="px-4 py-2 bg-white/[0.04] text-white/40 text-[12px] font-medium rounded-lg border border-white/[0.06] hover:bg-white/[0.08] transition-colors cursor-pointer">+ Add Step</button>
+      <button id="chain-run" class="px-5 py-2 bg-violet-500 text-white text-[12px] font-semibold rounded-lg hover:bg-violet-600 transition-colors border-none cursor-pointer ml-auto">Run Chain</button>
+    </div>
+  </div>
+
+  <div class="db-card">
+    <div class="db-card-header">Variable Mapping</div>
+    <p class="text-[12px] text-white/25 leading-relaxed">Use <code class="text-violet-400 bg-violet-500/10 px-1.5 py-0.5 rounded">{"{{step1.response.data.token}}"}</code> to reference values from previous steps in your chain.</p>
+  </div>
+</ToolPage>
+
+<style>
+  .db-input { padding:9px 12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; color:#FAFAFA; font-size:13px; outline:none; }
+  .db-input:focus { border-color:rgba(255,255,255,0.15); }
+  .db-input::placeholder { color:rgba(255,255,255,0.15); }
+  .db-input-sm { padding:6px 10px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:6px; color:#FAFAFA; font-size:11px; outline:none; }
+</style>
+
+<script>
+  let stepCount = 1;
+  document.getElementById('chain-add')!.addEventListener('click', () => {
+    stepCount++;
+    const step = document.createElement('div');
+    step.className = 'chain-step flex items-center gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.04]';
+
+    const badge = document.createElement('span');
+    badge.className = 'text-[11px] font-bold text-violet-400 bg-violet-500/15 px-2 py-0.5 rounded';
+    badge.textContent = String(stepCount);
+
+    const select = document.createElement('select');
+    select.className = 'db-input-sm';
+    ['GET','POST','PUT','DELETE'].forEach(m => { const o = document.createElement('option'); o.textContent = m; select.appendChild(o); });
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.placeholder = 'https://api.example.com/...';
+    input.className = 'db-input flex-1 font-mono text-[12px]';
+
+    const del = document.createElement('button');
+    del.className = 'text-white/15 hover:text-red-400 transition-colors text-[14px] cursor-pointer';
+    del.textContent = '×';
+    del.addEventListener('click', () => { step.remove(); });
+
+    step.appendChild(badge);
+    step.appendChild(select);
+    step.appendChild(input);
+    step.appendChild(del);
+    document.getElementById('chain-steps')!.appendChild(step);
+  });
+</script>

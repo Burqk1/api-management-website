@@ -1,0 +1,32 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+
+const vars = [
+  { syntax: '{{$timestamp}}', desc: 'Current Unix timestamp', id: 'dv-ts' },
+  { syntax: '{{$guid}}', desc: 'Random UUID v4', id: 'dv-guid' },
+  { syntax: '{{$randomInt}}', desc: 'Random integer (0-1000)', id: 'dv-int' },
+  { syntax: '{{$isoTimestamp}}', desc: 'ISO 8601 timestamp', id: 'dv-iso' },
+  { syntax: '{{$randomEmail}}', desc: 'Random email address', id: 'dv-email' },
+];
+---
+<ToolPage title="Dynamic Variables" description="Use dynamic variables like timestamps, UUIDs, and random data in requests" color="#D946EF">
+  <div class="db-card mb-4">
+    <div class="db-card-header">Available Dynamic Variables</div>
+    <div class="space-y-2">
+      {vars.map((v) => (
+        <div class="flex items-center gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.04]">
+          <code class="text-fuchsia-400 text-[12px] font-mono bg-fuchsia-500/10 px-2 py-0.5 rounded">{v.syntax}</code>
+          <span class="text-[12px] text-white/40 flex-1">{v.desc}</span>
+          <span class="text-[12px] text-white/20 font-mono" id={v.id}></span>
+        </div>
+      ))}
+    </div>
+  </div>
+</ToolPage>
+<script>
+  document.getElementById('dv-ts')!.textContent = String(Math.floor(Date.now()/1000));
+  document.getElementById('dv-guid')!.textContent = crypto.randomUUID();
+  document.getElementById('dv-int')!.textContent = String(Math.floor(Math.random()*1000));
+  document.getElementById('dv-iso')!.textContent = new Date().toISOString();
+  document.getElementById('dv-email')!.textContent = 'user' + Math.floor(Math.random()*999) + '@test.com';
+</script>

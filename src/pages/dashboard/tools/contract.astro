@@ -1,0 +1,11 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="Contract Testing" description="Validate API responses against OpenAPI/JSON Schema contracts" color="#22C55E">
+  <div class="db-card mb-4">
+    <div class="mb-4"><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">API Response</label><textarea rows="8" class="w-full p-3 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/60 resize-none leading-[1.7] outline-none" placeholder='{"id": 1, "name": "John"}'></textarea></div>
+    <div class="mb-4"><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Expected Schema (JSON Schema)</label><textarea rows="8" class="w-full p-3 bg-[#09090B] border border-white/[0.06] rounded-lg font-mono text-[12px] text-white/60 resize-none leading-[1.7] outline-none" placeholder='{"type": "object", "required": ["id", "name"]}'></textarea></div>
+    <button class="px-5 py-2.5 bg-green-500 text-white text-[13px] font-semibold rounded-lg hover:bg-green-600 transition-colors border-none cursor-pointer">Validate Contract</button>
+  </div>
+  <div class="db-card"><div class="db-card-header">Validation Result</div><div class="text-white/15 text-center py-8 text-[13px]">Paste a response and schema, then click Validate.</div></div>
+</ToolPage>

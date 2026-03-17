@@ -1,0 +1,274 @@
+---
+---
+
+<!-- Large statement text -->
+<section class="py-[120px] sm:py-[160px] px-6">
+  <div class="max-w-container mx-auto">
+    <div class="max-w-[900px]">
+      <p class="observe text-[28px] sm:text-[40px] lg:text-[56px] font-medium tracking-[-0.04em] leading-[1.15]">
+        <span class="text-[#F5F5F5]">Built for developers who ship from anywhere.</span>
+        <span class="text-[#3A3A3E]"> Fetchlab brings the full power of desktop API tools to your pocket. Test endpoints, debug responses, run scripts, and monitor APIs — all from your iPhone.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Feature showcase -->
+<section id="showcase" class="pb-[120px] sm:pb-[160px] px-6">
+  <div class="max-w-container mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+      <!-- 1. API Testing -->
+      <div class="feature-card group">
+        <div class="p-8 sm:p-10">
+          <div class="feature-icon" style="background: rgba(16,185,129,0.1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3 class="text-[20px] sm:text-[24px] font-medium tracking-[-0.03em] text-[#F5F5F5] mb-3">API Testing</h3>
+          <p class="text-[14px] text-[#6B6B6B] leading-relaxed">
+            Full-featured request builder with GET, POST, PUT, PATCH, DELETE support. Headers, body, auth, query params — everything you need to test any API.
+          </p>
+        </div>
+        <div class="px-8 sm:px-10 pb-0 mt-auto">
+          <div class="feature-mockup">
+            <div class="p-4">
+              <div class="flex gap-2 mb-3">
+                <span class="text-[10px] font-bold text-green-400 bg-green-400/10 px-2 py-1 rounded">GET</span>
+                <div class="flex-1 px-2.5 py-1 rounded bg-[#131316] border border-[#1E1E21] text-[10px] text-[#8B8B8B] font-mono truncate">/api/v1/users?limit=25</div>
+              </div>
+              <div class="flex items-center gap-2 p-2 rounded bg-[#0A0A0B] border border-[#1E1E21] mb-1.5">
+                <span class="text-[9px] font-bold text-green-400">200</span>
+                <span class="text-[9px] text-[#5C5C5C]">42ms</span>
+                <span class="text-[9px] text-[#3A3A3E] ml-auto font-mono">json</span>
+              </div>
+              <div class="p-2 rounded bg-[#0A0A0B] border border-[#1E1E21] font-mono text-[9px] text-[#5C5C5C] leading-relaxed">
+                <span class="text-[#F79CE0]">{"{"}</span> <span class="text-[#89D196]">"data"</span>: <span class="text-[#F79CE0]">[</span><span class="text-[#F79CE0]">{"{"}</span> <span class="text-[#89D196]">"id"</span>: <span class="text-[#D19A66]">1</span>, <span class="text-[#89D196]">"name"</span>: <span class="text-[#98C379]">"Alex"</span> <span class="text-[#F79CE0]">{"}"}</span><span class="text-[#F79CE0]">]</span> <span class="text-[#F79CE0]">{"}"}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Pre/Post Scripts -->
+      <div class="feature-card group">
+        <div class="p-8 sm:p-10">
+          <div class="feature-icon" style="background: rgba(139,92,246,0.1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3 class="text-[20px] sm:text-[24px] font-medium tracking-[-0.03em] text-[#F5F5F5] mb-3">Pre & Post Scripts</h3>
+          <p class="text-[14px] text-[#6B6B6B] leading-relaxed">
+            Postman-compatible scripting engine. Set auth tokens, chain variables, write test assertions — all in a sandboxed JavaScript environment.
+          </p>
+        </div>
+        <div class="px-8 sm:px-10 pb-0 mt-auto">
+          <div class="feature-mockup">
+            <div class="p-4 font-mono text-[10px] leading-[1.8]">
+              <div class="text-[#5C5C5C]">// Pre-request script</div>
+              <div><span class="text-[#F79CE0]">const</span> <span class="text-[#8FA4FF]">token</span> = <span class="text-[#89D196]">pm</span>.<span class="text-[#8FA4FF]">env</span>.<span class="text-[#89D196]">get</span>(<span class="text-[#98C379]">"auth"</span>);</div>
+              <div><span class="text-[#89D196]">pm</span>.<span class="text-[#8FA4FF]">headers</span>.<span class="text-[#89D196]">add</span>(<span class="text-[#98C379]">"Bearer"</span>, <span class="text-[#8FA4FF]">token</span>);</div>
+              <div class="mt-1.5 text-[#5C5C5C]">// Post-request test</div>
+              <div><span class="text-[#89D196]">pm</span>.<span class="text-[#8FA4FF]">test</span>(<span class="text-[#98C379]">"200 OK"</span>, () =&gt; {"{"}</div>
+              <div class="pl-4"><span class="text-[#89D196]">expect</span>(<span class="text-[#8FA4FF]">status</span>).<span class="text-[#89D196]">toBe</span>(<span class="text-[#D19A66]">200</span>);</div>
+              <div>{"}"});</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. GraphQL Explorer -->
+      <div class="feature-card group">
+        <div class="p-8 sm:p-10">
+          <div class="feature-icon" style="background: rgba(217,70,239,0.1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D946EF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20"/><path d="M2 12h4M18 12h4"/></svg>
+          </div>
+          <h3 class="text-[20px] sm:text-[24px] font-medium tracking-[-0.03em] text-[#F5F5F5] mb-3">GraphQL Explorer</h3>
+          <p class="text-[14px] text-[#6B6B6B] leading-relaxed">
+            Full introspection support, schema browser, query builder with variable support and subscriptions over WebSocket.
+          </p>
+        </div>
+        <div class="px-8 sm:px-10 pb-0 mt-auto">
+          <div class="feature-mockup">
+            <div class="p-4 font-mono text-[10px] leading-[1.8]">
+              <div><span class="text-[#F79CE0]">query</span> {"{"}</div>
+              <div class="pl-3"><span class="text-[#8FA4FF]">users</span>(limit: <span class="text-[#D19A66]">10</span>) {"{"}</div>
+              <div class="pl-6"><span class="text-[#89D196]">id</span></div>
+              <div class="pl-6"><span class="text-[#89D196]">name</span></div>
+              <div class="pl-6"><span class="text-[#89D196]">email</span></div>
+              <div class="pl-6"><span class="text-[#89D196]">posts</span> {"{"} <span class="text-[#89D196]">title</span> {"}"}</div>
+              <div class="pl-3">{"}"}</div>
+              <div>{"}"}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 78+ Developer Tools -->
+      <div class="feature-card group">
+        <div class="p-8 sm:p-10">
+          <div class="feature-icon" style="background: rgba(59,130,246,0.1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3 class="text-[20px] sm:text-[24px] font-medium tracking-[-0.03em] text-[#F5F5F5] mb-3">78+ Developer Tools</h3>
+          <p class="text-[14px] text-[#6B6B6B] leading-relaxed">
+            WebSocket client, SSE testing, load testing, benchmarking, code generator, JSON path evaluator, mock server, and much more.
+          </p>
+        </div>
+        <div class="px-8 sm:px-10 pb-0 mt-auto">
+          <div class="feature-mockup">
+            <div class="p-4 grid grid-cols-3 gap-1.5">
+              {[
+                { name: 'WebSocket', color: '#EC4899' },
+                { name: 'Load Test', color: '#F97316' },
+                { name: 'Mock Server', color: '#F59E0B' },
+                { name: 'gRPC', color: '#06B6D4' },
+                { name: 'Code Gen', color: '#3B82F6' },
+                { name: 'Benchmark', color: '#EF4444' },
+                { name: 'SSE', color: '#EAB308' },
+                { name: 'JSON Path', color: '#10B981' },
+                { name: 'AI Analysis', color: '#8B5CF6' },
+              ].map((tool) => (
+                <div class="flex items-center gap-1.5 px-2 py-1.5 rounded bg-[#131316] border border-[#1E1E21]">
+                  <div class="w-1.5 h-1.5 rounded-full shrink-0" style={`background: ${tool.color};`}></div>
+                  <span class="text-[8px] text-[#8B8B8B] font-medium truncate">{tool.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Encrypted Cloud Sync (full width) -->
+      <div class="feature-card group lg:col-span-2">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <div class="p-8 sm:p-10 flex flex-col justify-center">
+            <div class="feature-icon" style="background: rgba(255,149,0,0.1);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <h3 class="text-[20px] sm:text-[24px] font-medium tracking-[-0.03em] text-[#F5F5F5] mb-3">Encrypted Cloud Sync</h3>
+            <p class="text-[14px] text-[#6B6B6B] leading-relaxed max-w-[440px]">
+              End-to-end encrypted sync across all your devices. AES-256-GCM encryption, zero-knowledge architecture — even we can't read your data. Collections, environments, and history sync seamlessly.
+            </p>
+          </div>
+          <div class="p-8 sm:p-10 flex items-center justify-center">
+            <!-- Encryption flow visual -->
+            <div class="w-full max-w-[340px]">
+              <div class="grid grid-cols-3 gap-3 items-center">
+                <!-- Device -->
+                <div class="flex flex-col items-center gap-2">
+                  <div class="w-12 h-12 rounded-xl bg-[#131316] border border-[#1E1E21] flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B8B8B" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                  </div>
+                  <span class="text-[10px] text-[#5C5C5C] font-medium">Your Device</span>
+                  <div class="text-[8px] text-[#3A3A3E] text-center">Encrypted<br/>locally</div>
+                </div>
+                <!-- Lock / Arrow -->
+                <div class="flex flex-col items-center gap-2">
+                  <div class="w-full h-px bg-gradient-to-r from-transparent via-[#FF9500]/30 to-transparent"></div>
+                  <div class="w-10 h-10 rounded-lg bg-[#FF9500]/10 border border-[#FF9500]/20 flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  </div>
+                  <span class="text-[9px] text-[#FF9500] font-semibold">AES-256</span>
+                  <div class="w-full h-px bg-gradient-to-r from-transparent via-[#FF9500]/30 to-transparent"></div>
+                </div>
+                <!-- Cloud -->
+                <div class="flex flex-col items-center gap-2">
+                  <div class="w-12 h-12 rounded-xl bg-[#131316] border border-[#1E1E21] flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B8B8B" stroke-width="1.5"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                  </div>
+                  <span class="text-[10px] text-[#5C5C5C] font-medium">Cloud</span>
+                  <div class="text-[8px] text-[#3A3A3E] text-center">Zero-knowledge<br/>storage</div>
+                </div>
+              </div>
+              <!-- What syncs -->
+              <div class="mt-5 flex flex-wrap gap-1.5 justify-center">
+                {['Collections', 'Environments', 'History', 'API Keys', 'Scripts', 'Settings'].map((item) => (
+                  <span class="text-[9px] text-[#5C5C5C] bg-[#131316] border border-[#1E1E21] px-2 py-1 rounded-md">{item}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Real-time Monitoring (full width) -->
+      <div class="feature-card group lg:col-span-2">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <div class="p-8 sm:p-10 flex flex-col justify-center">
+            <div class="feature-icon" style="background: rgba(245,158,11,0.1);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h3 class="text-[20px] sm:text-[24px] font-medium tracking-[-0.03em] text-[#F5F5F5] mb-3">Real-time Monitoring</h3>
+            <p class="text-[14px] text-[#6B6B6B] leading-relaxed max-w-[440px]">
+              Automated health checks with configurable intervals. Track uptime, response times, incidents, and get push notifications when endpoints go down.
+            </p>
+          </div>
+          <div class="p-8 sm:p-10 flex items-center justify-center">
+            <div class="w-full max-w-[340px]">
+              <!-- Status rows -->
+              <div class="space-y-2">
+                {[
+                  { name: 'api.fetchlab.dev/health', status: 'up', time: '23ms', uptime: '99.9%' },
+                  { name: 'api.fetchlab.dev/v1/users', status: 'up', time: '42ms', uptime: '99.7%' },
+                  { name: 'api.fetchlab.dev/v1/auth', status: 'up', time: '38ms', uptime: '100%' },
+                  { name: 'api.fetchlab.dev/ws', status: 'down', time: '—', uptime: '98.2%' },
+                ].map((ep) => (
+                  <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-[#131316] border border-[#1E1E21]">
+                    <div class={`w-2 h-2 rounded-full shrink-0 ${ep.status === 'up' ? 'bg-green-400' : 'bg-red-400'}`}></div>
+                    <span class="text-[10px] text-[#8B8B8B] font-mono flex-1 truncate">{ep.name}</span>
+                    <span class="text-[9px] text-[#5C5C5C]">{ep.time}</span>
+                    <span class={`text-[9px] font-medium ${ep.status === 'up' ? 'text-green-400' : 'text-red-400'}`}>{ep.uptime}</span>
+                  </div>
+                ))}
+              </div>
+              <!-- Uptime bar -->
+              <div class="mt-3 flex gap-[2px]">
+                {Array.from({ length: 30 }, (_, i) => (
+                  <div class={`flex-1 h-4 rounded-[2px] ${i === 22 ? 'bg-red-500/60' : 'bg-green-500/40'}`}></div>
+                ))}
+              </div>
+              <div class="flex justify-between mt-1.5">
+                <span class="text-[8px] text-[#3A3A3E]">30 days ago</span>
+                <span class="text-[8px] text-[#3A3A3E]">Today</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature-card {
+    background: #111113;
+    border: 1px solid #1E1E21;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s ease;
+  }
+  .feature-card:hover {
+    border-color: #2A2A2E;
+  }
+  .feature-icon {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+  }
+  .feature-mockup {
+    background: #0A0A0B;
+    border: 1px solid #1E1E21;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+  }
+</style>

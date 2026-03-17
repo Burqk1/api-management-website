@@ -1,0 +1,254 @@
+---
+import Dashboard from '../../layouts/Dashboard.astro';
+---
+
+<Dashboard title="Settings" activeTab="settings">
+  <h1 class="text-[22px] font-semibold tracking-[-0.03em] text-white/90 mb-8" data-i18n="set.title">Settings</h1>
+
+  <!-- Account -->
+  <section class="mb-8">
+    <h2 class="text-[10px] font-semibold text-white/20 uppercase tracking-[0.1em] mb-3 px-1" data-i18n="set.account">Account</h2>
+    <div class="db-card !p-0 overflow-hidden">
+      <div class="flex items-center gap-3 px-5 py-4 hover:bg-white/[0.02] transition-colors cursor-pointer">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-[#FF9500] to-[#FF6B00] flex items-center justify-center shadow-lg shadow-orange-500/10">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="flex-1">
+          <div class="text-[14px] font-medium text-white/85" id="settings-email">Loading...</div>
+          <div class="text-[11px] text-white/25" id="settings-plan">Free Plan</div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/15"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+
+    <!-- Upgrade banner -->
+    <div class="mt-3 db-card !p-0 overflow-hidden" id="upgrade-banner">
+      <div class="flex items-center gap-4 px-5 py-4 bg-gradient-to-r from-[#FF9500]/5 to-transparent border-l-2 border-[#FF9500]">
+        <div class="w-9 h-9 rounded-lg bg-[#FF9500]/10 flex items-center justify-center shrink-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="flex-1">
+          <div class="text-[13px] font-semibold text-white/85" data-i18n="set.upgradePro">Upgrade to Pro</div>
+          <div class="text-[11px] text-white/30" data-i18n="set.upgradeDesc">Unlock 78+ tools, unlimited requests, and cloud sync</div>
+        </div>
+        <a href="/#pricing" class="px-4 py-2 bg-gradient-to-r from-[#FF9500] to-[#FF7A00] text-white text-[12px] font-semibold rounded-lg hover:opacity-90 transition-opacity shrink-0 shadow-lg shadow-orange-500/15">
+          Upgrade
+        </a>
+      </div>
+    </div>
+
+    <!-- Pro badge (shown when already pro) -->
+    <div class="mt-3 db-card !p-0 overflow-hidden hidden" id="pro-badge">
+      <div class="flex items-center gap-4 px-5 py-4 bg-gradient-to-r from-emerald-500/5 to-transparent border-l-2 border-emerald-500">
+        <div class="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="flex-1">
+          <div class="text-[13px] font-semibold text-emerald-400" id="pro-plan-label">Pro Plan</div>
+          <div class="text-[11px] text-white/30">All features unlocked</div>
+        </div>
+        <a href="/#pricing" class="text-[12px] text-white/30 hover:text-white/50 transition-colors">Manage →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Appearance -->
+  <section class="mb-8">
+    <h2 class="text-[10px] font-semibold text-white/20 uppercase tracking-[0.1em] mb-3 px-1" data-i18n="set.appearance">Appearance</h2>
+    <div class="db-card !p-0 overflow-hidden">
+      {[
+        { label: 'System', value: 'system', desc: 'Match OS preference', color: '#3B82F6' },
+        { label: 'Dark', value: 'dark', desc: 'Always dark mode', color: '#8B5CF6' },
+        { label: 'Light', value: 'light', desc: 'Always light mode', color: '#F59E0B' },
+      ].map((theme, i, arr) => (
+        <div class={`flex items-center gap-3 px-5 py-3.5 cursor-pointer hover:bg-white/[0.02] transition-colors theme-option ${i < arr.length - 1 ? 'border-b border-white/[0.04]' : ''}`} data-theme={theme.value}>
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center" style={`background: ${theme.color}15;`}>
+            <div class="w-3 h-3 rounded-full" style={`background: ${theme.color};`}></div>
+          </div>
+          <div class="flex-1">
+            <div class="text-[13px] font-medium text-white/80">{theme.label}</div>
+            <div class="text-[11px] text-white/20">{theme.desc}</div>
+          </div>
+          <div class="theme-check hidden w-5 h-5 rounded-full bg-[#FF9500] flex items-center justify-center">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Language -->
+  <section class="mb-8">
+    <h2 class="text-[10px] font-semibold text-white/20 uppercase tracking-[0.1em] mb-3 px-1" data-i18n="set.language">Language</h2>
+    <div class="db-card !p-0 overflow-hidden">
+      {[
+        { label: 'English', value: 'en', flag: '🇺🇸' },
+        { label: 'Türkçe', value: 'tr', flag: '🇹🇷' },
+      ].map((lang, i, arr) => (
+        <div class={`flex items-center gap-3 px-5 py-3.5 cursor-pointer hover:bg-white/[0.02] transition-colors lang-option ${i < arr.length - 1 ? 'border-b border-white/[0.04]' : ''}`} data-lang={lang.value}>
+          <span class="text-[18px]">{lang.flag}</span>
+          <span class="flex-1 text-[13px] font-medium text-white/80">{lang.label}</span>
+          <div class="lang-check hidden w-5 h-5 rounded-full bg-[#FF9500] flex items-center justify-center">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Accent Color -->
+  <section class="mb-8">
+    <h2 class="text-[10px] font-semibold text-white/20 uppercase tracking-[0.1em] mb-3 px-1" data-i18n="set.accentColor">Accent Color</h2>
+    <div class="db-card">
+      <div class="flex flex-wrap gap-2.5">
+        {['#0A84FF', '#FF453A', '#FF9500', '#FFD60A', '#30D158', '#5856D6', '#BF5AF2', '#FF375F', '#64D2FF'].map((color) => (
+          <button class="w-9 h-9 rounded-full transition-transform hover:scale-110 accent-dot cursor-pointer border-2 border-transparent" style={`background: ${color};`} data-color={color}></button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- API Keys -->
+  <section class="mb-8">
+    <h2 class="text-[10px] font-semibold text-white/20 uppercase tracking-[0.1em] mb-3 px-1" data-i18n="set.apiKeys">API Keys</h2>
+    <div class="db-card !p-0 overflow-hidden">
+      <div class="px-5 py-4 text-center">
+        <span class="text-[12px] text-white/20" data-i18n="set.noKeys">No API keys stored</span>
+      </div>
+      <div class="border-t border-white/[0.04] px-5 py-3 flex items-center justify-center gap-2 cursor-pointer hover:bg-white/[0.02] transition-colors">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FF9500" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span class="text-[12px] text-[#FF9500] font-semibold" data-i18n="set.addKey">Add API Key</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data -->
+  <section class="mb-8">
+    <h2 class="text-[10px] font-semibold text-white/20 uppercase tracking-[0.1em] mb-3 px-1" data-i18n="set.data">Data</h2>
+    <div class="db-card !p-0 overflow-hidden">
+      <div class="flex items-center gap-3 px-5 py-3.5 cursor-pointer hover:bg-red-500/[0.04] transition-colors" id="clear-logs-btn">
+        <div class="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </div>
+        <span class="text-[13px] font-medium text-red-400" data-i18n="set.clearLogs">Clear Call Logs</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Version -->
+  <p class="text-center text-[11px] text-white/15 mt-10">Fetchlab v1.0.0</p>
+</Dashboard>
+
+<script>
+  import { supabase } from '../../lib/supabase';
+  import { clearCallLogs, pushToCloud, loadLocal, updateSettings, getSettings } from '../../lib/syncStore';
+  import { t, applyTranslations } from '../../lib/i18n';
+
+  // Ensure local data is loaded
+  loadLocal();
+
+  // Read settings from localStorage directly (source of truth for settings)
+  function readLang(): string {
+    try { return JSON.parse(localStorage.getItem('fl_settings') || '{}').language || 'en'; } catch { return 'en'; }
+  }
+  function readTheme(): string {
+    try { return JSON.parse(localStorage.getItem('fl_settings') || '{}').theme || 'dark'; } catch { return 'dark'; }
+  }
+  function readAccent(): string | null {
+    try { return JSON.parse(localStorage.getItem('fl_settings') || '{}').accentColor || null; } catch { return null; }
+  }
+
+  // Load user info + plan
+  supabase.auth.getSession().then(async ({ data: { session } }) => {
+    if (!session) return;
+
+    const el = document.getElementById('settings-email');
+    if (el) el.textContent = session.user.email || '';
+
+    // Get plan from Supabase profiles
+    try {
+      const { data } = await supabase
+        .from('profiles')
+        .select('plan')
+        .eq('id', session.user.id)
+        .single();
+
+      const plan = data?.plan || 'free';
+      const planEl = document.getElementById('settings-plan');
+      const upgradeBanner = document.getElementById('upgrade-banner');
+      const proBadge = document.getElementById('pro-badge');
+      const proLabel = document.getElementById('pro-plan-label');
+
+      if (plan === 'pro' || plan === 'team') {
+        if (planEl) {
+          planEl.textContent = plan === 'team' ? 'Team Plan' : 'Pro Plan';
+          planEl.style.color = '#FF9500';
+        }
+        upgradeBanner?.classList.add('hidden');
+        proBadge?.classList.remove('hidden');
+        if (proLabel) proLabel.textContent = plan === 'team' ? 'Team Plan' : 'Pro Plan';
+      } else {
+        if (planEl) planEl.textContent = 'Free Plan';
+        upgradeBanner?.classList.remove('hidden');
+        proBadge?.classList.add('hidden');
+      }
+    } catch {}
+  });
+
+  // Theme
+  const currentTheme = readTheme();
+  document.querySelectorAll('.theme-option').forEach((el) => {
+    const check = el.querySelector('.theme-check');
+    if ((el as HTMLElement).dataset.theme === currentTheme) check?.classList.remove('hidden');
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.theme-check').forEach((c) => c.classList.add('hidden'));
+      check?.classList.remove('hidden');
+      updateSettings({ theme: (el as HTMLElement).dataset.theme as any });
+    });
+  });
+
+  // Language
+  const currentLang = readLang();
+  document.querySelectorAll('.lang-option').forEach((el) => {
+    const check = el.querySelector('.lang-check');
+    if ((el as HTMLElement).dataset.lang === currentLang) check?.classList.remove('hidden');
+    el.addEventListener('click', async () => {
+      const newLang = (el as HTMLElement).dataset.lang;
+      if (newLang === currentLang) return;
+
+      // 1. Save to localStorage via updateSettings
+      updateSettings({ language: newLang as any });
+
+      // 2. Update UI immediately
+      document.querySelectorAll('.lang-check').forEach((c) => c.classList.add('hidden'));
+      check?.classList.remove('hidden');
+
+      // 3. Apply translations without reload first
+      applyTranslations();
+
+      // 4. Push to cloud in background
+      pushToCloud().catch(() => {});
+
+      // 5. Reload to fully apply everywhere
+      window.location.reload();
+    });
+  });
+
+  // Accent color
+  const currentAccent = readAccent();
+  document.querySelectorAll('.accent-dot').forEach((el) => {
+    if ((el as HTMLElement).dataset.color === currentAccent) {
+      (el as HTMLElement).style.borderColor = 'white';
+    }
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.accent-dot').forEach((d) => (d as HTMLElement).style.borderColor = 'transparent');
+      (el as HTMLElement).style.borderColor = 'white';
+      updateSettings({ accentColor: (el as HTMLElement).dataset.color || null });
+    });
+  });
+
+  // Clear logs
+  document.getElementById('clear-logs-btn')?.addEventListener('click', () => {
+    if (confirm(t('hist.clearConfirm'))) clearCallLogs();
+  });
+</script>

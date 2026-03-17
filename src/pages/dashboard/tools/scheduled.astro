@@ -1,0 +1,14 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+<ToolPage title="Scheduled Runs" description="Schedule API requests to run at specific intervals" color="#6B7280">
+  <div class="db-card mb-4">
+    <div class="db-card-header">Create Schedule</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Name</label><input type="text" placeholder="Daily Health Check" class="w-full p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg text-[13px] text-white/60 outline-none" /></div>
+      <div><label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Interval</label><select class="w-full p-2.5 bg-[#09090B] border border-white/[0.06] rounded-lg text-[13px] text-white/60 outline-none"><option>Every 5 minutes</option><option>Every 15 minutes</option><option>Every hour</option><option>Daily</option></select></div>
+    </div>
+    <button class="px-5 py-2.5 bg-gray-500 text-white text-[13px] font-semibold rounded-lg hover:bg-gray-600 transition-colors border-none cursor-pointer">Create Schedule</button>
+  </div>
+  <div class="db-card"><div class="db-card-header">Active Schedules</div><div class="text-white/15 text-center py-8 text-[13px]">No scheduled runs configured.</div></div>
+</ToolPage>

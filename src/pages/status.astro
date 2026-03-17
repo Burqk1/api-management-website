@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+
+const services = [
+  { name: 'API', status: 'operational' },
+  { name: 'Cloud Sync', status: 'operational' },
+  { name: 'Authentication', status: 'operational' },
+  { name: 'CDN', status: 'operational' },
+  { name: 'Website', status: 'operational' },
+];
+
+const statusColors: Record<string, { dot: string; text: string; label: string }> = {
+  operational: { dot: 'bg-green-400', text: 'text-green-400', label: 'Operational' },
+  degraded: { dot: 'bg-amber-400', text: 'text-amber-400', label: 'Degraded' },
+  outage: { dot: 'bg-red-400', text: 'text-red-400', label: 'Outage' },
+};
+---
+
+<Base title="Status — Fetchlab" description="Current status of Fetchlab services. Real-time monitoring of API, sync, and infrastructure.">
+  <div class="pt-28 pb-20 px-6">
+    <div class="max-w-[680px] mx-auto">
+      <div class="flex items-center gap-3 mb-8">
+        <span class="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
+        <h1 class="text-[32px] sm:text-[40px] font-medium tracking-[-0.04em] text-[#F5F5F5]">All systems operational</h1>
+      </div>
+      <p class="text-[15px] text-[#5C5C5C] mb-14">Current status of Fetchlab infrastructure and services.</p>
+
+      <div class="border border-[#1E1E21] rounded-xl overflow-hidden">
+        {services.map((s, i) => (
+          <div class={`flex items-center justify-between px-6 py-4 ${i < services.length - 1 ? 'border-b border-[#1E1E21]' : ''}`}>
+            <span class="text-[14px] text-[#F5F5F5] font-medium">{s.name}</span>
+            <div class="flex items-center gap-2">
+              <span class={`w-1.5 h-1.5 rounded-full ${statusColors[s.status].dot}`}></span>
+              <span class={`text-[12px] ${statusColors[s.status].text}`}>{statusColors[s.status].label}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p class="text-[12px] text-[#3A3A3E] mt-6">Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+    </div>
+  </div>
+</Base>

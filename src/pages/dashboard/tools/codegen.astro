@@ -1,0 +1,73 @@
+---
+import ToolPage from '../../../layouts/ToolPage.astro';
+---
+
+<ToolPage title="Code Generator" description="Generate API client code in multiple languages from your requests" color="#06B6D4">
+  <div class="db-card mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+      <div>
+        <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Method & URL</label>
+        <div class="flex gap-2">
+          <select id="cg-method" class="db-input w-24 text-[12px] font-bold" style="color:#10B981"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>
+          <input type="text" id="cg-url" placeholder="https://api.example.com/users" class="db-input flex-1 font-mono text-[12px]" />
+        </div>
+      </div>
+      <div>
+        <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Language</label>
+        <select id="cg-lang" class="db-input w-full">
+          <option value="curl">cURL</option>
+          <option value="js-fetch">JavaScript (fetch)</option>
+          <option value="js-axios">JavaScript (axios)</option>
+          <option value="python">Python (requests)</option>
+          <option value="swift">Swift (URLSession)</option>
+          <option value="kotlin">Kotlin (OkHttp)</option>
+          <option value="go">Go (net/http)</option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label class="text-[11px] text-white/25 font-medium uppercase tracking-wider mb-2 block">Headers (optional)</label>
+      <input type="text" id="cg-headers" placeholder="Authorization: Bearer token123" class="db-input w-full font-mono text-[12px]" />
+    </div>
+    <button id="cg-generate" class="px-5 py-2.5 bg-cyan-500 text-white text-[13px] font-semibold rounded-lg hover:bg-cyan-600 transition-colors border-none cursor-pointer">Generate Code</button>
+  </div>
+
+  <div class="db-card hidden" id="cg-output">
+    <div class="flex items-center justify-between mb-3">
+      <span class="db-card-header !mb-0">Generated Code</span>
+      <button id="cg-copy" class="text-[11px] text-white/30 hover:text-white/60 transition-colors cursor-pointer bg-transparent border-none">Copy</button>
+    </div>
+    <pre id="cg-code" class="bg-[#09090B] border border-white/[0.06] rounded-lg p-4 font-mono text-[12px] text-cyan-300/70 overflow-auto max-h-[400px] leading-[1.7]"></pre>
+  </div>
+</ToolPage>
+
+<style>.db-input{padding:9px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:#FAFAFA;font-size:13px;outline:none}.db-input:focus{border-color:rgba(255,255,255,0.15)}.db-input::placeholder{color:rgba(255,255,255,0.15)}</style>
+
+<script>
+  const generators: Record<string, (m: string, u: string, h: string) => string> = {
+    'curl': (m, u, h) => `curl -X ${m} '${u}'${h ? ` \\\n  -H '${h}'` : ''}`,
+    'js-fetch': (m, u, h) => `const response = await fetch('${u}', {\n  method: '${m}',${h ? `\n  headers: {\n    '${h.split(':')[0]?.trim()}': '${h.split(':').slice(1).join(':').trim()}'\n  },` : ''}\n});\nconst data = await response.json();\nconsole.log(data);`,
+    'js-axios': (m, u, h) => `import axios from 'axios';\n\nconst { data } = await axios.${m.toLowerCase()}('${u}'${h ? `, {\n  headers: { '${h.split(':')[0]?.trim()}': '${h.split(':').slice(1).join(':').trim()}' }\n}` : ''});\nconsole.log(data);`,
+    'python': (m, u, h) => `import requests\n\nresponse = requests.${m.toLowerCase()}(\n    '${u}'${h ? `,\n    headers={'${h.split(':')[0]?.trim()}': '${h.split(':').slice(1).join(':').trim()}'}` : ''}\n)\nprint(response.json())`,
+    'swift': (m, u, h) => `let url = URL(string: "${u}")!\nvar request = URLRequest(url: url)\nrequest.httpMethod = "${m}"${h ? `\nrequest.setValue("${h.split(':').slice(1).join(':').trim()}", forHTTPHeaderField: "${h.split(':')[0]?.trim()}")` : ''}\n\nlet (data, _) = try await URLSession.shared.data(for: request)`,
+    'kotlin': (m, u, h) => `val client = OkHttpClient()\nval request = Request.Builder()\n    .url("${u}")${m !== 'GET' ? `\n    .method("${m}", null)` : ''}${h ? `\n    .addHeader("${h.split(':')[0]?.trim()}", "${h.split(':').slice(1).join(':').trim()}")` : ''}\n    .build()\nval response = client.newCall(request).execute()`,
+    'go': (m, u, h) => `req, err := http.NewRequest("${m}", "${u}", nil)${h ? `\nreq.Header.Set("${h.split(':')[0]?.trim()}", "${h.split(':').slice(1).join(':').trim()}")` : ''}\nclient := &http.Client{}\nresp, err := client.Do(req)`,
+  };
+
+  document.getElementById('cg-generate')!.addEventListener('click', () => {
+    const method = (document.getElementById('cg-method') as HTMLSelectElement).value;
+    const url = (document.getElementById('cg-url') as HTMLInputElement).value || 'https://api.example.com';
+    const lang = (document.getElementById('cg-lang') as HTMLSelectElement).value;
+    const headers = (document.getElementById('cg-headers') as HTMLInputElement).value;
+    const code = generators[lang]?.(method, url, headers) || '';
+    (document.getElementById('cg-code') as HTMLElement).textContent = code;
+    document.getElementById('cg-output')!.classList.remove('hidden');
+  });
+
+  document.getElementById('cg-copy')!.addEventListener('click', () => {
+    const code = (document.getElementById('cg-code') as HTMLElement).textContent || '';
+    navigator.clipboard.writeText(code);
+    document.getElementById('cg-copy')!.textContent = 'Copied!';
+    setTimeout(() => { document.getElementById('cg-copy')!.textContent = 'Copy'; }, 2000);
+  });
+</script>
