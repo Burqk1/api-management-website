@@ -89,7 +89,7 @@ npm run preview   # serve the built site
 
 ## Configuration
 
-Create a `.env` file in the project root:
+Copy `.env.example` to `.env` in the project root and fill in your values:
 
 ```env
 PUBLIC_SUPABASE_URL=https://<your-project>.supabase.co
@@ -111,5 +111,5 @@ node screenshot-section.mjs [url] [label] [scrollY] # one viewport-sized shot at
 ## Notes
 
 - The App Store button on `/download` links to `#`. There is no store link yet.
-- The repository currently tracks `node_modules/`, `dist/`, `.astro/` and `.env`, even though `.gitignore` lists `node_modules`. You can remove them from version control with `git rm -r --cached`. Note that the committed `.env` contains real Supabase values.
+- An earlier commit included a `.env` with the project's Supabase URL and anon (publishable) key. It is no longer tracked, but it remains in git history; rotate the key if that matters to you.
 - No license is specified.
